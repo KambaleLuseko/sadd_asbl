@@ -1,17 +1,17 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sadd_asbl/Resources/Components/button.dart';
-import 'package:sadd_asbl/Resources/Components/dialogs.dart';
-import 'package:sadd_asbl/Resources/Helpers/date_parser.dart';
-import 'package:sadd_asbl/Views/News/add_news.page.dart';
-import 'package:sadd_asbl/Views/News/controller/news.provider.dart';
-import 'package:sadd_asbl/Views/News/model/news.model.dart';
 
+import '../../Resources/Components/button.dart';
+import '../../Resources/Components/dialogs.dart';
 import '../../Resources/Components/texts.dart';
 import '../../Resources/Constants/global_variables.dart';
 import '../../Resources/Constants/responsive.dart';
+import '../../Resources/Helpers/date_parser.dart';
 import '../../Widgets/footer.widget.dart';
+import 'add_news.page.dart';
+import 'controller/news.provider.dart';
+import 'model/news.model.dart';
 
 class NewsListPage extends StatelessWidget {
   const NewsListPage({super.key});

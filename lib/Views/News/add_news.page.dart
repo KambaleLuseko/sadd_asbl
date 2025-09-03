@@ -2,12 +2,13 @@ import 'dart:html' as html;
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sadd_asbl/Resources/Components/button.dart';
-import 'package:sadd_asbl/Resources/Components/text_fields.dart';
-import 'package:sadd_asbl/Resources/Components/texts.dart';
-import 'package:sadd_asbl/Resources/Constants/global_variables.dart';
-import 'package:sadd_asbl/Views/News/controller/news.provider.dart';
-import 'package:sadd_asbl/Views/News/model/news.model.dart';
+
+import '../../Resources/Components/button.dart';
+import '../../Resources/Components/text_fields.dart';
+import '../../Resources/Components/texts.dart';
+import '../../Resources/Constants/global_variables.dart';
+import 'controller/news.provider.dart';
+import 'model/news.model.dart';
 
 class PublicationForm extends StatefulWidget {
   const PublicationForm({super.key});

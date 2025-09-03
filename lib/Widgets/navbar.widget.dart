@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:sadd_asbl/Views/News/news.page.dart';
-import 'package:sadd_asbl/Widgets/social_link.widget.dart';
-import 'package:sadd_asbl/main.dart';
 
 import '../Resources/Components/texts.dart';
 import '../Resources/Constants/global_variables.dart';
@@ -13,6 +10,9 @@ import '../Resources/Providers/menu_provider.dart';
 import '../Views/About/about.page.dart';
 import '../Views/Galery/goals.dart';
 import '../Views/Home/home.page.dart';
+import '../Views/News/news.page.dart';
+import '../main.dart';
+import 'social_link.widget.dart';
 
 class NavbarWidget extends StatefulWidget {
   const NavbarWidget({super.key, required this.drawerCallback});

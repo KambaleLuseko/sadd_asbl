@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sadd_asbl/Views/News/news.page.dart';
 
 import '../Resources/Components/texts.dart';
 import '../Resources/Constants/global_variables.dart';
@@ -9,6 +8,7 @@ import '../Resources/Providers/menu_provider.dart';
 import '../Views/About/about.page.dart';
 import '../Views/Galery/goals.dart';
 import '../Views/Home/home.page.dart';
+import '../Views/News/news.page.dart';
 
 class SidebarNavbarWidget extends StatefulWidget {
   const SidebarNavbarWidget({super.key});

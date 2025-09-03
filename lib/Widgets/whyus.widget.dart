@@ -3,14 +3,14 @@ import 'dart:math';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sadd_asbl/Resources/Helpers/date_parser.dart';
-import 'package:sadd_asbl/Views/News/controller/news.provider.dart';
-import 'package:sadd_asbl/Views/News/model/news.model.dart';
-import 'package:sadd_asbl/main.dart';
 
 import '../Resources/Components/texts.dart';
 import '../Resources/Constants/global_variables.dart';
 import '../Resources/Constants/responsive.dart';
+import '../Resources/Helpers/date_parser.dart';
+import '../Views/News/controller/news.provider.dart';
+import '../Views/News/model/news.model.dart';
+import '../main.dart';
 
 class WhyUsComponentWidget extends StatefulWidget {
   const WhyUsComponentWidget({super.key});

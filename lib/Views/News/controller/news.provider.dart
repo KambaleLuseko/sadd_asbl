@@ -2,10 +2,11 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
-import 'package:sadd_asbl/Resources/Constants/app_providers.dart';
-import 'package:sadd_asbl/Resources/Constants/enums.dart';
-import 'package:sadd_asbl/Resources/Constants/global_variables.dart';
-import 'package:sadd_asbl/Views/News/model/news.model.dart';
+
+import '../../../Resources/Constants/app_providers.dart';
+import '../../../Resources/Constants/enums.dart';
+import '../../../Resources/Constants/global_variables.dart';
+import '../model/news.model.dart';
 
 class NewsProvider extends ChangeNotifier {
   List<NewsModel> offlineData = [], displayedData = [], carousselData = [];

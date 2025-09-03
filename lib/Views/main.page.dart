@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sadd_asbl/Views/Home/widgets/caroussel.widget.dart';
-import 'package:sadd_asbl/Views/News/controller/news.provider.dart';
 
 import '../Resources/Constants/global_variables.dart';
 import '../Resources/Constants/responsive.dart';
 import '../Resources/Providers/menu_provider.dart';
 import '../Widgets/navbar.widget.dart';
 import '../Widgets/sidebar.widget.dart';
+import 'Home/widgets/caroussel.widget.dart';
+import 'News/controller/news.provider.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});

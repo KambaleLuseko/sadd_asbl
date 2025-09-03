@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:sadd_asbl/main.dart';
 
 import '../Resources/Components/texts.dart';
 import '../Resources/Constants/global_variables.dart';
 import '../Resources/Constants/responsive.dart';
+import '../main.dart';
 import 'social_link.widget.dart';
 
 class FooterComponentWidget extends StatefulWidget {
