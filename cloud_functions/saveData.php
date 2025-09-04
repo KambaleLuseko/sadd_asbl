@@ -118,15 +118,13 @@ if ($transaction == 'news') {
     $sql = "SELECT plaques.id ID, plaques.numero numPlaque, plaques.ville villePlaque,engin.marque marqueEngin, engin.couleur couleurEngin, engin.shasi, engin.genre, engin.num_moteur, engin.annee_fabrication, engin.annee_circulation,engin.puissance, engin.usage_moto, engin.status, engin.created_at, conducteurs.nom condNom, conducteurs.tel condTel, conducteurs.active, conducteurs.nnCarte cardID, conducteurs.nom2 cond2Nom, conducteurs.tel2 cond2Tel, conducteurs.nnCarte2 cardID2 FROM plaques INNER JOIN engin ON engin.plaque=plaques.numero INNER JOIN conducteurs ON conducteurs.id_engin=engin.id";
     // print($sql);
 }
-else if ($transaction == 'platestock') {
-    $sql = "SELECT * FROM stock_plaques";
+else if ($transaction == 'news_views') {
+    $newsID=trim(htmlspecialchars($data['newsID']));
+    $sql = "INSERT INTO news_views ( news_id, count) VALUES ( '$newsID', 1) ON DUPLICATE KEY UPDATE count = count + 1;";
+
+    // UPDATE news_views SET count=count+1 WHERE news_id=$newsID
 }
-else if ($transaction == 'login') {
-    $username=trim(htmlspecialchars($_POST['username']));
-    $password=trim(htmlspecialchars($_POST['password']));
-    $level=trim(htmlspecialchars($_POST['level']));
-    $sql = "SELECT `id`, `nom`, `username`,  `niveau` from users where username='$username' and password='$password' and niveau='$level'";
-}else{
+else{
     http_response_code(401);
         echo json_encode(['status' => 'erreur', 'message' => 'No gateway found']);
     return;

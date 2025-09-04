@@ -2,14 +2,12 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../Resources/Components/button.dart';
 import '../../Resources/Components/dialogs.dart';
 import '../../Resources/Components/texts.dart';
 import '../../Resources/Constants/global_variables.dart';
 import '../../Resources/Constants/responsive.dart';
 import '../../Resources/Helpers/date_parser.dart';
 import '../../Widgets/footer.widget.dart';
-import 'add_news.page.dart';
 import 'controller/news.provider.dart';
 import 'model/news.model.dart';
 
@@ -24,21 +22,21 @@ class NewsListPage extends StatelessWidget {
         const SizedBox(height: 32),
 
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             TextWidgets.textBold(
               title: "Réalisations",
               fontSize: 32,
               textColor: AppColors.kWhiteColor,
             ),
-            IconButtonWidget(
-                backColor: AppColors.kGreenColor,
-                textColor: AppColors.kWhiteColor,
-                callback: () {
-                  Dialogs.showModal(
-                      hasScroll: true, child: const PublicationForm());
-                },
-                icon: Icons.add),
+            // IconButtonWidget(
+            //     backColor: AppColors.kGreenColor,
+            //     textColor: AppColors.kWhiteColor,
+            //     callback: () {
+            //       Dialogs.showModal(
+            //           hasScroll: true, child: const PublicationForm());
+            //     },
+            //     icon: Icons.add),
           ],
         ),
         // TextWidgets.text300(
@@ -154,32 +152,48 @@ class NewsItemWidget extends StatelessWidget {
                       )),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 0.0, vertical: 8),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      TextWidgets.textBold(
-                        maxLines: 3,
-                        title: data.contenu
-                            .toString()
-                            .replaceAll('-', ' ')
-                            .toUpperCase(),
-                        fontSize: 16,
-                        textColor: AppColors.kWhiteColor,
+                      const SizedBox(
+                        height: 8,
                       ),
-                      const Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 4, 0, 4),
-                        child: Row(
-                          children: [],
-                        ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                              child: TextWidgets.textBold(
+                            maxLines: 3,
+                            title: data.contenu
+                                .toString()
+                                .replaceAll('-', ' ')
+                                .toUpperCase(),
+                            fontSize: 16,
+                            textColor: AppColors.kWhiteColor,
+                          )),
+                          const SizedBox(
+                            width: 16,
+                          ),
+                          TextWidgets.text300(
+                            title: "${data.viewCount ?? 0} Vues",
+                            fontSize: 12,
+                            textColor: AppColors.kWhiteColor,
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 8,
                       ),
                       Row(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           TextWidgets.text300(
-                            title: parseDate(date: data.datePub ?? ''),
+                            title:
+                                "${parseDate(date: data.datePub ?? '')}, ${data.viewCount ?? 0} Vues",
                             fontSize: 12,
                             textColor: AppColors.kWhiteDarkColor,
                           ),
@@ -225,6 +239,7 @@ class _NewsDetailsPageState extends State<NewsDetailsPage> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       activeImage = widget.data.image ?? '';
       setState(() {});
+      context.read<NewsProvider>().saveViews(newsID: widget.data.id!);
     });
   }
 

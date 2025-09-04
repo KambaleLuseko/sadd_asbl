@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sadd_asbl/Resources/Components/dialogs.dart';
+import 'package:sadd_asbl/Views/News/news.list.dart';
 
 import '../../../Resources/Components/button.dart';
 import '../../../Resources/Components/texts.dart';
@@ -157,12 +159,27 @@ class _CarousselWidgetState extends State<CarousselWidget> {
                                             const SizedBox(
                                               height: 24,
                                             ),
-                                            TextWidgets.text300(
-                                              maxLines: 4,
-                                              title:
-                                                  "Publié le ${parseDate(date: data[index].datePub ?? '')}",
-                                              fontSize: 18,
-                                              textColor: AppColors.kWhiteColor,
+                                            Row(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                TextWidgets.text300(
+                                                  maxLines: 4,
+                                                  title:
+                                                      "Publié le ${parseDate(date: data[index].datePub ?? '').toString().substring(0, 10)},",
+                                                  fontSize: 18,
+                                                  textColor:
+                                                      AppColors.kWhiteColor,
+                                                ),
+                                                const SizedBox(width: 8),
+                                                TextWidgets.textBold(
+                                                  maxLines: 4,
+                                                  title:
+                                                      "${data[index].viewCount ?? 0} vues",
+                                                  fontSize: 18,
+                                                  textColor:
+                                                      AppColors.kWhiteColor,
+                                                ),
+                                              ],
                                             ),
                                             const SizedBox(
                                               height: 24,
@@ -174,7 +191,13 @@ class _CarousselWidgetState extends State<CarousselWidget> {
                                                     AppColors.kSecondaryColor,
                                                 textColor:
                                                     AppColors.kBlackColor,
-                                                callback: () {})
+                                                callback: () {
+                                                  Dialogs.showModal(
+                                                    hasScroll: true,
+                                                    child: NewsDetailsPage(
+                                                        data: data[index]),
+                                                  );
+                                                })
                                           ]),
                                     ),
                                   ))
@@ -252,7 +275,7 @@ class _CarousselWidgetState extends State<CarousselWidget> {
                       Positioned(
                         top: 0,
                         right: 0,
-                        left: 0,
+                        // left: 0,
                         bottom: 0,
                         child: Container(
                           padding: const EdgeInsets.symmetric(
@@ -270,6 +293,7 @@ class _CarousselWidgetState extends State<CarousselWidget> {
                               // ])
                               ),
                           child: Row(
+                            mainAxisSize: MainAxisSize.min,
                             mainAxisAlignment: MainAxisAlignment.end,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [

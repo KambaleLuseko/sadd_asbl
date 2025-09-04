@@ -43,7 +43,7 @@ class _WhyUsComponentWidgetState extends State<WhyUsComponentWidget> {
                   .contenu ??
               '',
           subtitle:
-              "Publié le ${parseDate(date: navKey.currentContext!.read<NewsProvider>().offlineData[index].datePub ?? '')}",
+              "Publié le ${parseDate(date: navKey.currentContext!.read<NewsProvider>().offlineData[index].datePub ?? '').toString().substring(0, 10)}, ${navKey.currentContext!.read<NewsProvider>().offlineData[index].viewCount ?? 0} vues",
           imagePath: navKey.currentContext!
                   .read<NewsProvider>()
                   .offlineData[index]
@@ -180,7 +180,7 @@ class SocialImpactItem extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(8),
                 child: TextWidgets.textBold(
-                  maxLines: 3,
+                  maxLines: 5,
                   title: data.title,
                   fontSize: 14,
                   textColor: AppColors.kWhiteColor,

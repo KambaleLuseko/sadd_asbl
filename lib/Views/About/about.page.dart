@@ -47,16 +47,16 @@ class _AboutPageWidgetState extends State<AboutPageWidget> {
                     return true;
                   }
                 }()
-                    ? Axis.horizontal
+                    ? Axis.vertical
                     : Axis.vertical,
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Flexible(
-                    fit: Responsive.isMobile(context)
-                        ? FlexFit.loose
-                        : FlexFit.tight,
+                    // fit: Responsive.isMobile(context)
+                    //     ? FlexFit.loose
+                    //     : FlexFit.tight,
                     child: Container(
                       decoration: const BoxDecoration(),
                       child: Padding(
@@ -81,9 +81,9 @@ class _AboutPageWidgetState extends State<AboutPageWidget> {
                     ),
                   ),
                   Flexible(
-                    fit: Responsive.isMobile(context)
-                        ? FlexFit.loose
-                        : FlexFit.tight,
+                    // fit: Responsive.isMobile(context)
+                    //     ? FlexFit.loose
+                    //     : FlexFit.tight,
                     child: Container(
                       decoration: const BoxDecoration(),
                       child: Opacity(
@@ -94,7 +94,7 @@ class _AboutPageWidgetState extends State<AboutPageWidget> {
                               if (Responsive.isMobile(context)) {
                                 return 0.0;
                               } else {
-                                return 32.0;
+                                return 0.0;
                               }
                             }()),
                             0,
@@ -103,7 +103,7 @@ class _AboutPageWidgetState extends State<AboutPageWidget> {
                           ),
                           child: TextWidgets.text300(
                             maxLines: 24,
-                            align: TextAlign.justify,
+                            // align: TextAlign.justify,
                             title:
                                 "La sadd ASBL en sigle solidaire Action pour le Droit et le développement a été créée le 19/09/2010 à Goma conformément à la loi n°004/20 juillet 2001, disposition générales applicables aux ASBL.\n\nSIEGE\nLe siège social de la SADD Asbl est établi à Goma en République Démocratique du Congo sur l’avenue Kinshasa n°14, Quartier Kyeshero commune de Goma dans la Province du nord Kivu",
                             fontSize: 16,
@@ -125,16 +125,40 @@ class _AboutPageWidgetState extends State<AboutPageWidget> {
                       return true;
                     }
                   }()
-                      ? Axis.horizontal
+                      ? Axis.vertical
                       : Axis.vertical,
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Flexible(
-                      fit: Responsive.isMobile(context)
-                          ? FlexFit.loose
-                          : FlexFit.tight,
+                      // fit: Responsive.isMobile(context)
+                      //     ? FlexFit.loose
+                      //     : FlexFit.tight,
+                      child: Container(
+                        decoration: const BoxDecoration(),
+                        child: Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                            0,
+                            0,
+                            0,
+                            0,
+                          ),
+                          child: TextWidgets.textBold(
+                            title: 'HISTORIQUE',
+                            fontSize: 32,
+                            textColor: AppColors.kWhiteColor,
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    Flexible(
+                      // fit: Responsive.isMobile(context)
+                      //     ? FlexFit.loose
+                      //     : FlexFit.tight,
                       child: Container(
                         decoration: const BoxDecoration(),
                         child: Opacity(
@@ -147,13 +171,13 @@ class _AboutPageWidgetState extends State<AboutPageWidget> {
                                 if (Responsive.isMobile(context)) {
                                   return 0.0;
                                 } else {
-                                  return 32.0;
+                                  return 0.0;
                                 }
                               }()),
                               0,
                             ),
                             child: TextWidgets.text300(
-                              align: TextAlign.justify,
+                              align: TextAlign.start,
                               maxLines: 12000,
                               title: """
 La question du droit et du développement étant de nos jours incontournable pour l’amélioration des conditions des vies des population vivant dans une très grande promiscuité et subissant une violation excessives des droits humains, pour essayer tant soit peu à rehausser le niveau de vie de ces personnes vulnérables et à plaider leur cause, monsieur Camille PALUKU KAMATHE riche de son expérience à la communauté économique européenne (CEE) pendant qu’il y exerçait ses fonctions et de son expertise de consultant dans des organisations non gouvernementales internationales et Madame Sarah LUSENGE KAMATHE de son expérience de juriste, journaliste, défenseurs des droits humains au sein de L’organisation non gouvernementale femmes juristes pour les droits de la femme où elle assurait la coordination en ville de Béni financé par le haut commissariat des nations unies aux droits de l’homme, la coopération suisse à travers la synergie pour les victimes de violences sexuelles ; en collaboration avec divers partenaires, sur leur initiatives et celui de juristes en collaboration avec les économistes, médecins, sociologues, techniciens de développement rural et tout les autres chercheurs soucieuse de réunir autour d’elle tous les fils du pays afin de réfléchir sur les conditions sociales, environnementales, la situation des droits humains et du développement en général.\n
@@ -168,39 +192,6 @@ Réuni par cette pertinence et cette opportunité avons créé l’Asbl SADD « 
                               fontSize: 16,
                               textColor: AppColors.kWhiteColor,
                             ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Flexible(
-                      fit: Responsive.isMobile(context)
-                          ? FlexFit.loose
-                          : FlexFit.tight,
-                      child: Container(
-                        decoration: const BoxDecoration(),
-                        child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                            (() {
-                              if (Responsive.isMobile(context)) {
-                                return 0.0;
-                              } else {
-                                return 32.0;
-                              }
-                            }()),
-                            0,
-                            (() {
-                              if (Responsive.isMobile(context)) {
-                                return 0.0;
-                              } else {
-                                return 32.0;
-                              }
-                            }()),
-                            0,
-                          ),
-                          child: TextWidgets.textBold(
-                            title: 'HISTORIQUE',
-                            fontSize: 32,
-                            textColor: AppColors.kWhiteColor,
                           ),
                         ),
                       ),

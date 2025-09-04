@@ -1,7 +1,11 @@
-import 'dart:html' as html;
+import 'dart:convert';
+import 'dart:typed_data';
 
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sadd_asbl/Resources/Constants/enums.dart';
+import 'package:sadd_asbl/Views/Admin/controller/admin.provider.dart';
 
 import '../../Resources/Components/button.dart';
 import '../../Resources/Components/text_fields.dart';
@@ -14,10 +18,19 @@ class PublicationForm extends StatefulWidget {
   const PublicationForm({super.key});
 
   @override
-  _PublicationFormState createState() => _PublicationFormState();
+  State<PublicationForm> createState() => _PublicationFormState();
 }
 
 class _PublicationFormState extends State<PublicationForm> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      _auteurController.text = context.read<AdminProvider>().user?.email ?? '';
+      setState(() {});
+    });
+  }
+
   // Clé globale pour le formulaire
   final _formKey = GlobalKey<FormState>();
 
@@ -44,31 +57,10 @@ class _PublicationFormState extends State<PublicationForm> {
         'contenu': _contenuController.text,
       };
 
-      // print('Données du formulaire prêtes à être envoyées:');
-      context.read<NewsProvider>().save(
-          data: NewsModel.fromJson(data),
-          callback: () {
-            Navigator.pop(context);
-          });
-      // Ici, vous pouvez appeler votre service API pour envoyer les données
+      context
+          .read<NewsProvider>()
+          .save(data: NewsModel.fromJson(data), callback: () {});
     }
-  }
-
-  Future<void> pickImage({required Function(String) callback}) async {
-    // Use file_picker or a similar package for production
-    // This is a simple HTML input for demonstration on web
-    html.FileUploadInputElement uploadInput = html.FileUploadInputElement();
-    uploadInput.click();
-
-    uploadInput.onChange.listen((e) {
-      final html.File file = uploadInput.files!.first;
-      final reader = html.FileReader();
-      reader.readAsDataUrl(file);
-      reader.onLoadEnd.listen((e) {
-        String base64String = reader.result.toString().split(',').last;
-        callback(base64String);
-      });
-    });
   }
 
   @override
@@ -84,6 +76,7 @@ class _PublicationFormState extends State<PublicationForm> {
                 title: "Nouvelle publication",
                 fontSize: 22,
                 textColor: AppColors.kWhiteColor),
+            const SizedBox(height: 32),
             TextFormFieldWidget(
               hintText: 'Titre',
               textColor: AppColors.kWhiteColor,
@@ -91,7 +84,7 @@ class _PublicationFormState extends State<PublicationForm> {
               editCtrller: _titreController,
             ),
 
-            const SizedBox(height: 20),
+            const SizedBox(height: 16),
 
             // Champ pour l'auteur
             TextFormFieldWidget(
@@ -102,40 +95,27 @@ class _PublicationFormState extends State<PublicationForm> {
             ),
             const SizedBox(height: 20),
 
-            // Boutons pour les images (simulés)
-            TextWidgets.textBold(
-              title: 'Sélectionner des images',
-              fontSize: 16,
-              textColor: AppColors.kWhiteColor,
-            ),
             const SizedBox(height: 8),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                ElevatedButton(
-                  onPressed: () {
-                    // Logique de sélection d'image à implémenter ici
-                    pickImage(callback: (value) {
-                      _imagePath = value;
+                ImageUploader(
+                    callback: (img) {
+                      _imagePath = base64Encode(img);
                       setState(() {});
-                    });
+                    },
+                    title: "Image 1"),
+                ImageUploader(
+                  callback: (img) {
+                    _image2Path = base64Encode(img);
+                    setState(() {});
                   },
-                  child: const Text('Image 1'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    pickImage(callback: (value) {
-                      _image2Path = value;
-                      setState(() {});
-                    });
-                  },
-                  child: const Text('Image 2'),
-                ),
+                  title: 'Image 2',
+                )
               ],
             ),
             const SizedBox(height: 20),
 
-            // Champ pour le contenu
             TextFormFieldWidget(
               maxLines: 5,
               hintText: 'Contenu',
@@ -156,6 +136,113 @@ class _PublicationFormState extends State<PublicationForm> {
           ],
         ),
       ),
+    );
+  }
+}
+
+class ImageUploader extends StatefulWidget {
+  const ImageUploader({super.key, required this.callback, required this.title});
+//  Uint8List? image;
+  final Function(Uint8List) callback;
+  final String title;
+  @override
+  State<ImageUploader> createState() => _ImageUploaderState();
+}
+
+class _ImageUploaderState extends State<ImageUploader> {
+  static const int imageSize = 1;
+  Uint8List? image;
+  Future<void> pickImage() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowMultiple: false,
+      allowedExtensions: ['jpg', 'jpeg', 'png'],
+    );
+
+    if (result != null) {
+      final double sizeInMb = result.files.first.size / (1024 * 1024);
+
+      if (sizeInMb > imageSize) {
+        ToastNotification.showToast(
+            msg: "Le fichier est trop volumineux, 1mb maximum",
+            msgType: MessageType.error,
+            title: 'Error');
+        return;
+      }
+      Uint8List? fileBytes = result.files.first.bytes;
+      // String fileName = result.files.first.name;
+      image = fileBytes;
+      widget.callback(image!);
+      setState(() {});
+      // Upload file
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        image != null
+            ? Container(
+                width: 100,
+                height: 100,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: Image.memory(
+                    image!,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              )
+            : Container(
+                width: 100,
+                height: 100,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Colors.grey[200],
+                ),
+                child: Icon(
+                  Icons.add_photo_alternate,
+                  size: 40,
+                  color: Colors.grey[400],
+                ),
+              ),
+        const SizedBox(height: 10),
+        Text(
+          widget.title,
+          style: const TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+        ),
+        Text(
+          'Select an image to upload',
+          style: TextStyle(
+            fontSize: 14,
+            color: Colors.grey[600],
+          ),
+        ),
+        const SizedBox(height: 10),
+        ElevatedButton(
+          onPressed: () {
+            pickImage();
+          },
+          style: ElevatedButton.styleFrom(
+            backgroundColor: AppColors.kAccentColor,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+          ),
+          child: TextWidgets.text300(
+              title: "Selectionner",
+              fontSize: 14,
+              textColor: AppColors.kWhiteColor),
+        ),
+      ],
     );
   }
 }

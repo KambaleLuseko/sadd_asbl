@@ -33,7 +33,8 @@ class NewsProvider extends ChangeNotifier {
     // print(response.body);
     List data = [];
     if (response.statusCode == 200) {
-      data = jsonDecode(response.body);
+      data =
+          jsonDecode(response.body) is String ? [] : jsonDecode(response.body);
     }
     List<NewsModel> dataList = List<NewsModel>.from(
       data.map((item) {
@@ -63,6 +64,8 @@ class NewsProvider extends ChangeNotifier {
   int currentPage = 1;
   int get pageCount => (offlineData.length / itemPerPage).ceil();
   changePage({required String action}) {
+    displayedData = [];
+    notifyListeners();
     if (action.toLowerCase() == 'first') {
       currentPage = 1;
     } else if (action.toLowerCase() == 'previous') {
@@ -148,6 +151,25 @@ class NewsProvider extends ChangeNotifier {
         title: "Erreur",
       );
       return;
+    }
+  }
+
+  saveViews({required int newsID}) async {
+    Response res = await AppProviders.appProvider.httpPost(
+      url: BaseUrl.saveData,
+      body: {'transaction': "news_views", 'newsID': newsID},
+    );
+    // print()
+    if (res.statusCode == 200) {
+      NewsModel item =
+          offlineData.firstWhere((element) => element.id == newsID);
+      item.viewCount = (item.viewCount ?? 0) + 1;
+      offlineData[offlineData.indexWhere((element) => element.id == newsID)] =
+          item;
+      offlineData = [...offlineData];
+      changePage(action: 'first');
+    } else {
+      print('error occured ${jsonDecode(res.body)['message']}');
     }
   }
 }

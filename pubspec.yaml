@@ -47,6 +47,7 @@ dependencies:
   date_format:
   hive:
   hive_flutter:
+  file_picker: "8.0.5"
 
 dev_dependencies:
   flutter_test:

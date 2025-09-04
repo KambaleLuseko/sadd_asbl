@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:sadd_asbl/Resources/Components/button.dart';
+import 'package:sadd_asbl/Resources/Constants/navigators.dart';
+import 'package:sadd_asbl/Views/Admin/login.page.dart';
 
 import '../Resources/Components/texts.dart';
 import '../Resources/Constants/global_variables.dart';
@@ -261,6 +264,13 @@ class _NavbarWidgetState extends State<NavbarWidget> {
                 //       ),
                 //     ),
                 //   ),
+                IconButtonWidget(
+                    backColor: AppColors.kTransparentColor,
+                    textColor: AppColors.kWhiteColor,
+                    callback: () {
+                      Navigation.pushReplaceNavigate(page: const LoginPage());
+                    },
+                    icon: Icons.login_rounded)
               ],
             ),
           ],

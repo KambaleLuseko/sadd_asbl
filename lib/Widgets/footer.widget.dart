@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../Resources/Components/texts.dart';
 import '../Resources/Constants/global_variables.dart';
@@ -145,6 +146,30 @@ class _FooterComponentWidgetState extends State<FooterComponentWidget> {
               );
             },
           ),
+          const SizedBox(
+            height: 32,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextWidgets.text300(
+                  title: "Website designed by",
+                  fontSize: 14,
+                  textColor: AppColors.kWhiteDarkColor),
+              const SizedBox(
+                width: 8,
+              ),
+              GestureDetector(
+                onTap: () {
+                  launchUrl(Uri.parse("https://applicatoryx.org"));
+                },
+                child: TextWidgets.textNormal(
+                    title: "Applicatoryx Technologies",
+                    fontSize: 14,
+                    textColor: AppColors.kWhiteColor),
+              ),
+            ],
+          )
         ],
       ),
     );
