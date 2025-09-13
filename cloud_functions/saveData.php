@@ -66,14 +66,21 @@ if ($transaction == 'news') {
     if (isset($data['image']) && isset($data['image2'])) {
         $base64_image1 = $data['image'];
         $base64_image2 = $data['image2'];
+        $video = $data['video'];
 
         // Decode the base64 string into binary data
         $decoded_image1 = base64_decode($base64_image1);
         $decoded_image2 = base64_decode($base64_image2);
+        if(isset($video)){
+            $decodedVideo = base64_decode($video);
+        }
         
         // Set a path to save the file
         $upload_path1 = 'news1_' . rand(1, 9999).'_'. date('YmdHis') . '.jpg';
         $upload_path2 = 'news2_' . rand(1, 9999).'_'. date('YmdHis') . '.jpg';
+        if(isset($video)){
+            $upload_video = 'video_' . rand(1, 9999).'_'. date('YmdHis') . '.mp4';
+        }
         
         // Save the image data to a file
         if (file_put_contents("images/".$upload_path1, $decoded_image1)) {
@@ -94,6 +101,17 @@ if ($transaction == 'news') {
             echo json_encode(['status' => 'error', 'message' => 'Failed to save the image2.'.$errorMessage]);
             return;
         }
+        if(isset($upload_video) && isset($decodedVideo)){
+            if (file_put_contents("images/".$upload_video, $decodedVideo)) {
+           
+            } else {
+                $last_error = error_get_last();
+                $errorMessage = $last_error['message'] ?? 'An unknown error occurred.';
+                http_response_code(500);
+                echo json_encode(['status' => 'error', 'message' => 'Failed to save the video.'.$errorMessage]);
+                return;
+            }
+        }
     } else {
         http_response_code(400);
         echo json_encode(['status' => 'error', 'message' => 'No image data received.']);
@@ -105,8 +123,8 @@ if ($transaction == 'news') {
         Constants::connect()->close();
         exit();
     }
-    $sql = "INSERT INTO realisations (textes, auteur, image, image2, date_pub, contenu) 
-            VALUES ('$textes', '$auteur', '$upload_path1', '$upload_path2', '".date('Y-m-d H:i:s')."', '$contenu');";
+    $sql = "INSERT INTO realisations (textes, auteur, image, image2, date_pub, contenu, video) 
+            VALUES ('$textes', '$auteur', '$upload_path1', '$upload_path2', '".date('Y-m-d H:i:s')."', '$contenu', '$upload_video');";
     } catch (\Throwable $th) {
         http_response_code(500);
         echo json_encode(['status' => 'erreur', 'message' => $th->getMessage()]);

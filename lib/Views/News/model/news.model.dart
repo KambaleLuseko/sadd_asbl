@@ -7,7 +7,7 @@ class NewsModel {
   String? datePub;
   String? contenu;
   int? viewCount;
-
+  String? video;
   NewsModel(
       {this.id,
       this.textes,
@@ -16,7 +16,8 @@ class NewsModel {
       this.image2,
       this.datePub,
       this.contenu,
-      this.viewCount});
+      this.viewCount,
+      this.video});
 
   NewsModel.fromJson(Map json) {
     id = int.tryParse(json['id'].toString());
@@ -26,6 +27,7 @@ class NewsModel {
     image2 = json['image2'];
     datePub = json['date_pub'];
     contenu = json['contenu'];
+    video = json['video'];
     viewCount = int.tryParse(json['viewCount'].toString());
   }
 
@@ -38,6 +40,7 @@ class NewsModel {
     data['image2'] = image2;
     data['date_pub'] = datePub;
     data['contenu'] = contenu;
+    data['video'] = video;
     data['viewCount'] = viewCount;
     data.removeWhere((key, value) => value == null || value.isEmpty);
     return data;

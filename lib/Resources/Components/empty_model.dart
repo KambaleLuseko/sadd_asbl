@@ -1,4 +1,3 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import 'texts.dart';
@@ -23,7 +22,7 @@ class EmptyModel extends StatelessWidget {
           Icon(Icons.delete_outline_rounded, size: 40, color: color),
           const SizedBox(height: 20),
           TextWidgets.text300(
-            title: "status.no-data".tr(),
+            title: "Aucune donnee",
             fontSize: 14,
             maxLines: 2,
             textColor: color,

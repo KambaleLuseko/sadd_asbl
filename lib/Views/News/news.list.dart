@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:video_player/video_player.dart';
 
 import '../../Resources/Components/dialogs.dart';
 import '../../Resources/Components/texts.dart';
@@ -233,6 +234,7 @@ class NewsDetailsPage extends StatefulWidget {
 }
 
 class _NewsDetailsPageState extends State<NewsDetailsPage> {
+  VideoPlayerController? _playerCtrller;
   @override
   void initState() {
     super.initState();
@@ -243,7 +245,14 @@ class _NewsDetailsPageState extends State<NewsDetailsPage> {
     });
   }
 
+  @override
+  void dispose() {
+    _playerCtrller?.dispose();
+    super.dispose();
+  }
+
   String activeImage = '';
+  String? videoUrl;
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -295,6 +304,19 @@ class _NewsDetailsPageState extends State<NewsDetailsPage> {
                 )),
               ),
             ),
+          if (videoUrl != null && _playerCtrller != null)
+            ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: SizedBox(
+                width: double.maxFinite,
+                height: 300,
+                child: Center(
+                  child: VideoPlayer(
+                    _playerCtrller!,
+                  ),
+                ),
+              ),
+            ),
           const SizedBox(height: 32),
           Container(
             alignment: Alignment.centerLeft,
@@ -317,6 +339,7 @@ class _NewsDetailsPageState extends State<NewsDetailsPage> {
                             widget.data.image!,
                             widget.data.image2!,
                           ][index];
+                          videoUrl = null;
                         });
                       },
                       child: MouseRegion(
@@ -327,7 +350,11 @@ class _NewsDetailsPageState extends State<NewsDetailsPage> {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(12),
                             border: Border.all(
-                              color: activeImage == index
+                              color: activeImage ==
+                                      [
+                                        widget.data.image!,
+                                        widget.data.image2!,
+                                      ][index]
                                   ? AppColors.kWhiteColor
                                   : AppColors.kTransparentColor,
                               width: 4,
@@ -363,6 +390,47 @@ class _NewsDetailsPageState extends State<NewsDetailsPage> {
                       ),
                     );
                   }),
+                  if (widget.data.video != null)
+                    GestureDetector(
+                      onTap: () {
+                        _playerCtrller = VideoPlayerController.networkUrl(
+                            Uri.parse(
+                                '${BaseUrl.apiUrl}/images/${widget.data.video!}'))
+                          ..initialize().then((value) => setState(() {
+                                videoUrl = widget.data.video!;
+                                _playerCtrller!.play();
+                                activeImage = '';
+                              }));
+                      },
+                      child: MouseRegion(
+                        cursor: SystemMouseCursors.click,
+                        child: Container(
+                          width: 100,
+                          height: 100,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            border: Border.all(
+                              color: videoUrl != null
+                                  ? AppColors.kWhiteColor
+                                  : AppColors.kTransparentColor,
+                              width: 4,
+                            ),
+                          ),
+                          child: ClipRRect(
+                              borderRadius: const BorderRadius.only(
+                                bottomLeft: Radius.circular(12),
+                                bottomRight: Radius.circular(12),
+                                topLeft: Radius.circular(12),
+                                topRight: Radius.circular(12),
+                              ),
+                              child: Icon(
+                                Icons.play_circle_fill_rounded,
+                                color: AppColors.kWhiteColor,
+                                size: 72,
+                              )),
+                        ),
+                      ),
+                    )
                 ],
               ),
             ),

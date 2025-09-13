@@ -41,6 +41,7 @@ class _PublicationFormState extends State<PublicationForm> {
 
   String? _imagePath;
   String? _image2Path;
+  String? _videoContent;
 
   // Fonction de soumission du formulaire
   void _submitForm() {
@@ -54,6 +55,7 @@ class _PublicationFormState extends State<PublicationForm> {
         'auteur': _auteurController.text,
         'image': _imagePath,
         'image2': _image2Path,
+        'video': _videoContent,
         'contenu': _contenuController.text,
       };
 
@@ -111,7 +113,15 @@ class _PublicationFormState extends State<PublicationForm> {
                     setState(() {});
                   },
                   title: 'Image 2',
-                )
+                ),
+                ImageUploader(
+                  isImage: false,
+                  callback: (img) {
+                    _videoContent = base64Encode(img);
+                    setState(() {});
+                  },
+                  title: 'Video',
+                ),
               ],
             ),
             const SizedBox(height: 20),
@@ -141,10 +151,15 @@ class _PublicationFormState extends State<PublicationForm> {
 }
 
 class ImageUploader extends StatefulWidget {
-  const ImageUploader({super.key, required this.callback, required this.title});
+  const ImageUploader(
+      {super.key,
+      required this.callback,
+      required this.title,
+      this.isImage = true});
 //  Uint8List? image;
   final Function(Uint8List) callback;
   final String title;
+  final bool? isImage;
   @override
   State<ImageUploader> createState() => _ImageUploaderState();
 }
@@ -156,15 +171,25 @@ class _ImageUploaderState extends State<ImageUploader> {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
       allowMultiple: false,
-      allowedExtensions: ['jpg', 'jpeg', 'png'],
+      allowedExtensions: [
+        if (widget.isImage == true) ...['jpg', 'jpeg', 'png', 'gif'],
+        if (widget.isImage == false) ...['mp4', 'avi', 'mkv', 'mov', 'wmv']
+      ],
     );
 
     if (result != null) {
       final double sizeInMb = result.files.first.size / (1024 * 1024);
 
-      if (sizeInMb > imageSize) {
+      if (sizeInMb > imageSize && widget.isImage == true) {
         ToastNotification.showToast(
             msg: "Le fichier est trop volumineux, 1mb maximum",
+            msgType: MessageType.error,
+            title: 'Error');
+        return;
+      }
+      if (sizeInMb > (imageSize * 10) && widget.isImage == false) {
+        ToastNotification.showToast(
+            msg: "Le fichier est trop volumineux, 10mb maximum",
             msgType: MessageType.error,
             title: 'Error');
         return;
@@ -191,10 +216,16 @@ class _ImageUploaderState extends State<ImageUploader> {
                 ),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(10),
-                  child: Image.memory(
-                    image!,
-                    fit: BoxFit.cover,
-                  ),
+                  child: widget.isImage == true
+                      ? Image.memory(
+                          image!,
+                          fit: BoxFit.cover,
+                        )
+                      : const Icon(
+                          Icons.play_circle_fill_rounded,
+                          size: 72,
+                          color: Colors.white,
+                        ),
                 ),
               )
             : Container(
@@ -205,7 +236,9 @@ class _ImageUploaderState extends State<ImageUploader> {
                   color: Colors.grey[200],
                 ),
                 child: Icon(
-                  Icons.add_photo_alternate,
+                  widget.isImage == true
+                      ? Icons.add_photo_alternate
+                      : Icons.video_file_rounded,
                   size: 40,
                   color: Colors.grey[400],
                 ),
@@ -220,10 +253,10 @@ class _ImageUploaderState extends State<ImageUploader> {
           ),
         ),
         Text(
-          'Select an image to upload',
-          style: TextStyle(
+          'Select a ${widget.isImage == true ? 'picture' : 'video'} to upload',
+          style: const TextStyle(
             fontSize: 14,
-            color: Colors.grey[600],
+            color: Colors.white,
           ),
         ),
         const SizedBox(height: 10),

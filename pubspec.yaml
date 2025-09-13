@@ -37,17 +37,18 @@ dependencies:
   cached_network_image:
   intl: 
   provider: 
-  fl_chart:
+  # fl_chart:
   shared_preferences:
   url_launcher:
   font_awesome_flutter: "10.7.0"
-  easy_localization:
+  # easy_localization:
   pdf:
   printing:
   date_format:
   hive:
   hive_flutter:
   file_picker: "8.0.5"
+  video_player: any
 
 dev_dependencies:
   flutter_test:

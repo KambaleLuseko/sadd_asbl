@@ -1,4 +1,3 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../main.dart';
@@ -88,7 +87,7 @@ class Dialogs {
                                     callback: () async {
                                       Navigator.pop(navKey.currentContext!);
                                     },
-                                    text: "action.close".tr(),
+                                    text: "Fermer",
                                     backColor: dialogType == MessageType.error
                                         ? AppColors.kRedColor
                                         : dialogType == MessageType.success
@@ -218,7 +217,7 @@ class Dialogs {
                                     callback: () async {
                                       Navigator.pop(context);
                                     },
-                                    text: "action.close".tr(),
+                                    text: "Fermer",
                                     backColor: Colors.grey[200]!,
                                     textColor: AppColors.kBlackColor),
                               ),
@@ -230,7 +229,7 @@ class Dialogs {
                                           .pop();
                                       await callback();
                                     },
-                                    text: "action.confirm".tr(),
+                                    text: "Confirmer",
                                     backColor: dialogType == MessageType.error
                                         ? AppColors.kRedColor
                                         : dialogType == MessageType.success
@@ -355,7 +354,7 @@ class Dialogs {
                                     callback: () async {
                                       Navigator.pop(context);
                                     },
-                                    text: "action.close".tr(),
+                                    text: "Fermer",
                                     backColor: Colors.grey[200]!,
                                     textColor: AppColors.kBlackColor),
                               ),
@@ -366,7 +365,7 @@ class Dialogs {
                                       await callback();
                                       Navigator.pop(context);
                                     },
-                                    text: "action.confirm".tr(),
+                                    text: "Confirmer",
                                     backColor: dialogType == MessageType.error
                                         ? AppColors.kRedColor
                                         : dialogType == MessageType.success
