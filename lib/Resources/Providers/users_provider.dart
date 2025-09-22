@@ -38,7 +38,7 @@ class UserProvider extends ChangeNotifier {
       );
     } else {
       res = await AppProviders.appProvider.httpPost(
-        url: BaseUrl.signUp,
+        url: BaseUrl.user,
         body: data.toJSON(),
       );
     }
@@ -56,8 +56,7 @@ class UserProvider extends ChangeNotifier {
     if (res.statusCode == 500) {
       // LocalDataHelper.saveData(key: keyName, value: data.toJSON());
       ToastNotification.showToast(
-        msg:
-            jsonDecode(res.body)['message'] ??
+        msg: jsonDecode(res.body)['message'] ??
             'Une erreur est survenue, sauvegarde hors connexion en cours...',
         msgType: MessageType.info,
         title: "Information",
@@ -65,8 +64,7 @@ class UserProvider extends ChangeNotifier {
     }
     if (res.statusCode > 299 && res.statusCode != 500) {
       ToastNotification.showToast(
-        msg:
-            jsonDecode(res.body)['message'] ??
+        msg: jsonDecode(res.body)['message'] ??
             'Une erreur est survenue, Veuillez réessayer',
         msgType: MessageType.error,
         title: "Erreur",
@@ -148,12 +146,11 @@ class UserProvider extends ChangeNotifier {
     // print(query);
     Response res;
     res = await AppProviders.appProvider.httpPost(
-      url: BaseUrl.signIn,
+      url: BaseUrl.user,
       body: {
         ...data,
-        "level": data['username'].toString().contains('root')
-            ? 'Root'
-            : "Admin",
+        "level":
+            data['username'].toString().contains('root') ? 'Root' : "Admin",
       },
     );
     // print(res.body);
@@ -187,9 +184,8 @@ class UserProvider extends ChangeNotifier {
   getUserData() async {
     userLogged = null;
     String? loggedUser = prefs.getString('loggedUser');
-    userLogged = loggedUser != null
-        ? AuthModel.fromJSON(jsonDecode(loggedUser))
-        : null;
+    userLogged =
+        loggedUser != null ? AuthModel.fromJSON(jsonDecode(loggedUser)) : null;
     // getOffline();
     // print(userLogged?.toJSON());
     // offlineData = userLogged?.society?.assets ?? [];
@@ -284,8 +280,7 @@ class UserProvider extends ChangeNotifier {
     }
     if (response.statusCode == 500) {
       ToastNotification.showToast(
-        msg:
-            jsonDecode(response.body)['message'] ??
+        msg: jsonDecode(response.body)['message'] ??
             'Une erreur est survenue, veuillez réessayer',
         msgType: MessageType.info,
         title: "Information",
@@ -293,8 +288,7 @@ class UserProvider extends ChangeNotifier {
     }
     if (response.statusCode != 200 && response.statusCode != 500) {
       ToastNotification.showToast(
-        msg:
-            jsonDecode(response.body)['message'] ??
+        msg: jsonDecode(response.body)['message'] ??
             "L'adresse mail fournit n'a pas été trouvée",
         msgType: MessageType.error,
         title: "Erreur",
@@ -324,8 +318,7 @@ class UserProvider extends ChangeNotifier {
     }
     if (response.statusCode == 500) {
       ToastNotification.showToast(
-        msg:
-            jsonDecode(response.body)['message'] ??
+        msg: jsonDecode(response.body)['message'] ??
             'Une erreur est survenue, veuillez réessayer',
         msgType: MessageType.info,
         title: "Information",
@@ -333,8 +326,7 @@ class UserProvider extends ChangeNotifier {
     }
     if (response.statusCode != 200 && response.statusCode != 500) {
       ToastNotification.showToast(
-        msg:
-            jsonDecode(response.body)['message'] ??
+        msg: jsonDecode(response.body)['message'] ??
             "L'adresse mail fournit n'a pas été trouvée",
         msgType: MessageType.error,
         title: "Erreur",
@@ -368,8 +360,7 @@ class UserProvider extends ChangeNotifier {
     }
     if (response.statusCode == 500) {
       ToastNotification.showToast(
-        msg:
-            jsonDecode(response.body)?['message'] ??
+        msg: jsonDecode(response.body)?['message'] ??
             'Une erreur est survenue, veuillez réessayer',
         msgType: MessageType.info,
         title: "Information",

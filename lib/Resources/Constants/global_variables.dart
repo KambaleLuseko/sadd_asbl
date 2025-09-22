@@ -38,31 +38,11 @@ class AppColors {
 class BaseUrl {
   static String appName = "Kengele System";
   static String appContact = "+243 000 000 000";
-  static String ip = "http://127.0.0.1:8000";
+  // static String ip = "http://127.0.0.1:8000";
+  static String ip = "https://test.saddasbl.org/API";
   static String apiUrl = ip;
-  // static String graphqlEndpoint = "$apiUrl/graphql";
-  // static String getLogin = '$apiUrl/user/login/';
   static String authentication = '$apiUrl/authentication';
-  static String signIn = '$apiUrl/authentication/signin';
-  static String signUp = '$apiUrl/authentication/signup';
   static String user = '$apiUrl/users';
-  static String services = '$apiUrl/services';
-  static String societies = '$apiUrl/societies';
-  static String alerts = '$apiUrl/alerts';
-  static String supports = '$apiUrl/supports';
-  static String redlists = '$apiUrl/red-list';
-  static String clientLinks = '$apiUrl/client-link';
-
-  ///
-  /// INVESTIGATIONS
-  ///
-  static String investigation = '$apiUrl/investigations';
-  static String interview = '$apiUrl/investigations/interview';
-
-  ///
-  /// MISSIONS
-  ///
-  static String mission = '$apiUrl/missions';
 
   ///
   static String getData = '$apiUrl/get_data.php';
