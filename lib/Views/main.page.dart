@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sadd_asbl/Views/menu.widget.dart';
 
 import '../Resources/Constants/global_variables.dart';
 import '../Resources/Constants/responsive.dart';
 import '../Resources/Providers/menu_provider.dart';
 import '../Widgets/navbar.widget.dart';
-import '../Widgets/sidebar.widget.dart';
 import 'Home/widgets/caroussel.widget.dart';
 import 'News/controller/news.provider.dart';
 
@@ -21,7 +21,9 @@ class _MainPageState extends State<MainPage> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      await context.read<MenuProvider>().initDefaultMenu();
       context.read<NewsProvider>().get();
+      setState(() {});
     });
   }
 
@@ -33,7 +35,7 @@ class _MainPageState extends State<MainPage> {
       backgroundColor: AppColors.kPrimaryColor,
       key: _scaffoldKey,
       drawerEnableOpenDragGesture: false,
-      drawer: const Drawer(elevation: 1, child: SidebarNavbarWidget()),
+      drawer: const Drawer(elevation: 1, child: MenuWidget()),
       body: SafeArea(
         child: Stack(
           children: [

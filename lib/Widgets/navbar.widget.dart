@@ -8,12 +8,7 @@ import 'package:sadd_asbl/Views/Admin/login.page.dart';
 import '../Resources/Components/texts.dart';
 import '../Resources/Constants/global_variables.dart';
 import '../Resources/Constants/responsive.dart';
-import '../Resources/Models/Menu/menu.model.dart';
 import '../Resources/Providers/menu_provider.dart';
-import '../Views/About/about.page.dart';
-import '../Views/Galery/goals.dart';
-import '../Views/Home/home.page.dart';
-import '../Views/News/news.page.dart';
 import '../main.dart';
 import 'social_link.widget.dart';
 
@@ -106,93 +101,32 @@ class _NavbarWidgetState extends State<NavbarWidget> {
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        InkWell(
-                          splashColor: Colors.transparent,
-                          focusColor: Colors.transparent,
-                          hoverColor: Colors.transparent,
-                          highlightColor: Colors.transparent,
-                          onTap: () async {
-                            context.read<MenuProvider>().setActivePage(
-                                  newPage: MenuModel(
-                                    title: "Accueil",
-                                    page: const HomePage(),
-                                  ),
-                                );
-                          },
-                          child: TextWidgets.textBold(
-                            title: "Accueil",
-                            fontSize: 14,
-                            textColor: AppColors.kWhiteColor,
+                        ...List.generate(
+                          context.watch<MenuProvider>().menus.length,
+                          (index) => Container(
+                            margin: const EdgeInsets.only(right: 16),
+                            child: InkWell(
+                              splashColor: Colors.transparent,
+                              focusColor: Colors.transparent,
+                              hoverColor: Colors.transparent,
+                              highlightColor: Colors.transparent,
+                              onTap: () async {
+                                context.read<MenuProvider>().setActivePage(
+                                      newPage: context
+                                          .read<MenuProvider>()
+                                          .menus[index],
+                                    );
+                              },
+                              child: TextWidgets.textBold(
+                                title: context
+                                    .read<MenuProvider>()
+                                    .menus[index]
+                                    .title,
+                                fontSize: 14,
+                                textColor: AppColors.kWhiteColor,
+                              ),
+                            ),
                           ),
-                        ),
-                        const SizedBox(
-                          width: 16,
-                        ),
-                        InkWell(
-                          splashColor: Colors.transparent,
-                          focusColor: Colors.transparent,
-                          hoverColor: Colors.transparent,
-                          highlightColor: Colors.transparent,
-                          onTap: () async {
-                            context.read<MenuProvider>().setActivePage(
-                                  newPage: MenuModel(
-                                    title: "A propos",
-                                    page: const AboutPageWidget(),
-                                  ),
-                                );
-                          },
-                          child: TextWidgets.textBold(
-                            title: "A propos",
-                            fontSize: 14,
-                            textColor: AppColors.kWhiteColor,
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 16,
-                        ),
-                        InkWell(
-                          splashColor: Colors.transparent,
-                          focusColor: Colors.transparent,
-                          hoverColor: Colors.transparent,
-                          highlightColor: Colors.transparent,
-                          onTap: () async {
-                            context.read<MenuProvider>().setActivePage(
-                                  newPage: MenuModel(
-                                    title: "Nos objectifs",
-                                    page: const GoalsPage(),
-                                  ),
-                                );
-                          },
-                          child: TextWidgets.textBold(
-                            title: "Nos objectifs",
-                            fontSize: 14,
-                            textColor: AppColors.kWhiteColor,
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 16,
-                        ),
-                        InkWell(
-                          splashColor: Colors.transparent,
-                          focusColor: Colors.transparent,
-                          hoverColor: Colors.transparent,
-                          highlightColor: Colors.transparent,
-                          onTap: () async {
-                            context.read<MenuProvider>().setActivePage(
-                                  newPage: MenuModel(
-                                    title: "Réalisations",
-                                    page: const NewsPage(),
-                                  ),
-                                );
-                          },
-                          child: TextWidgets.textBold(
-                            title: "Réalisations",
-                            fontSize: 14,
-                            textColor: AppColors.kWhiteColor,
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 16,
                         ),
                       ],
                     ),
@@ -264,13 +198,14 @@ class _NavbarWidgetState extends State<NavbarWidget> {
                 //       ),
                 //     ),
                 //   ),
-                IconButtonWidget(
-                    backColor: AppColors.kTransparentColor,
-                    textColor: AppColors.kWhiteColor,
-                    callback: () {
-                      Navigation.pushReplaceNavigate(page: const LoginPage());
-                    },
-                    icon: Icons.login_rounded)
+                if (Responsive.isWeb(context))
+                  IconButtonWidget(
+                      backColor: AppColors.kTransparentColor,
+                      textColor: AppColors.kWhiteColor,
+                      callback: () {
+                        Navigation.pushReplaceNavigate(page: const LoginPage());
+                      },
+                      icon: Icons.login_rounded)
               ],
             ),
           ],

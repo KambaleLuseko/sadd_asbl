@@ -119,9 +119,9 @@ class _FooterComponentWidgetState extends State<FooterComponentWidget> {
                         SocialLinkWidget(
                           // iconColor: Colors.blueAccent,
                           icon: Icons.call,
-                          link: 'tel:+243 995 413 819',
+                          link: 'tel:+243 998 972 997',
                           showTitle: true,
-                          title: "+243 995 413 819",
+                          title: "+243 998 972 997",
                         ),
                         SizedBox(height: 8),
                         SocialLinkWidget(
@@ -153,7 +153,7 @@ class _FooterComponentWidgetState extends State<FooterComponentWidget> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               TextWidgets.text300(
-                  title: "Website designed by",
+                  title: "Designed by",
                   fontSize: 14,
                   textColor: AppColors.kWhiteDarkColor),
               const SizedBox(

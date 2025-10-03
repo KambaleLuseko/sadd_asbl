@@ -53,6 +53,7 @@ class NewsListPage extends StatelessWidget {
               return GridView.count(
                 crossAxisCount: Responsive.isMobile(context) ? 1 : 2,
                 mainAxisSpacing: 16,
+                physics: const NeverScrollableScrollPhysics(),
                 crossAxisSpacing: 16,
                 shrinkWrap: true,
                 childAspectRatio: 1.5,
@@ -164,6 +165,7 @@ class NewsItemWidget extends StatelessWidget {
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Expanded(
                               child: TextWidgets.textBold(
@@ -193,8 +195,9 @@ class NewsItemWidget extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           TextWidgets.text300(
-                            title:
-                                "${parseDate(date: data.datePub ?? '')}, ${data.viewCount ?? 0} Vues",
+                            title: parseDate(date: data.datePub ?? '')
+                                .toString()
+                                .substring(0, 20),
                             fontSize: 12,
                             textColor: AppColors.kWhiteDarkColor,
                           ),

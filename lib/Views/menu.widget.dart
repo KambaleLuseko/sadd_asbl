@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sadd_asbl/Resources/Components/button.dart';
+import 'package:sadd_asbl/Resources/Constants/navigators.dart';
+import 'package:sadd_asbl/Views/Admin/login.page.dart';
 
 import '../Resources/Components/texts.dart';
 import '../Resources/Constants/global_variables.dart';
@@ -21,11 +24,14 @@ class _MenuWidgetState extends State<MenuWidget> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Container(
-        color: AppColors.kAccentColor,
+        color: AppColors.kBlackLightColor,
         padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+        alignment: Alignment.centerLeft,
         child: Consumer<MenuProvider>(
           builder: (context, menuStateProvider, child) {
             return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Card(
                   margin: const EdgeInsets.all(0),
@@ -89,24 +95,24 @@ class _MenuWidgetState extends State<MenuWidget> {
                                           .userLogged
                                           ?.user
                                           .phoneNumber ??
-                                      'contact@${appName.toLowerCase().replaceAll(' ', '')}.com',
+                                      'info@${appName.toLowerCase().replaceAll(' ', '')}.org',
                                   fontSize: 12,
                                   textColor: AppColors.kGreyColor,
                                 ),
                               ),
                               const SizedBox(height: 8),
-                              Container(
-                                child: TextWidgets.text300(
-                                  title: context
-                                          .watch<UserProvider>()
-                                          .userLogged
-                                          ?.user
-                                          .niveau ??
-                                      'Unknown',
-                                  fontSize: 12,
-                                  textColor: AppColors.kWhiteColor,
-                                ),
-                              ),
+                              // Container(
+                              //   child: TextWidgets.text300(
+                              //     title: context
+                              //             .watch<UserProvider>()
+                              //             .userLogged
+                              //             ?.user
+                              //             .niveau ??
+                              //         'Unknown',
+                              //     fontSize: 12,
+                              //     textColor: AppColors.kWhiteColor,
+                              //   ),
+                              // ),
                             ],
                           ),
                         ),
@@ -114,39 +120,7 @@ class _MenuWidgetState extends State<MenuWidget> {
                     ),
                   ),
                 ),
-                // Container(
-                //   decoration: BoxDecoration(color: AppColors.kScaffoldColor),
-                //   alignment: Alignment.center,
-                //   padding:
-                //       const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                //   child: Row(
-                //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //     children: [
-                //       InkWell(
-                //         onTap: () {},
-                //         child: IconStateItem(
-                //           icon: Icons.shopping_cart_rounded,
-                //           validState: true,
-                //         ),
-                //       ),
-                //       IconStateItem(
-                //         icon: Icons.notifications_active,
-                //         validState: false,
-                //         errorIcon: Text(
-                //           '0'.padLeft(2, '0'),
-                //           style: TextStyle(
-                //               fontSize: 6, color: AppColors.kWhiteColor),
-                //         ),
-                //       ),
-                //       IconStateItem(
-                //         icon: Icons.wifi,
-                //         validState:
-                //             context.watch<AppStateProvider>().isApiReachable,
-                //       ),
-                //     ],
-                //   ),
-                // ),
-                // const SizedBox(height: 8),
+
                 Expanded(
                   child: ListView(
                     controller: ScrollController(keepScrollOffset: false),
@@ -156,13 +130,20 @@ class _MenuWidgetState extends State<MenuWidget> {
                           menu: menuStateProvider.menus[index],
                           textColor: AppColors.kWhiteColor,
                           hoverColor: AppColors.kWhiteColor.withOpacity(0.7),
-                          backColor: AppColors.kAccentColor,
+                          backColor: AppColors.kBlackLightColor,
                         );
                       }),
                       const SizedBox(height: 32),
                     ],
                   ),
                 ),
+                IconButtonWidget(
+                    backColor: AppColors.kTransparentColor,
+                    textColor: AppColors.kWhiteColor,
+                    callback: () {
+                      Navigation.pushReplaceNavigate(page: const LoginPage());
+                    },
+                    icon: Icons.login_rounded)
                 // Padding(
                 //   padding: const EdgeInsets.all(8.0),
                 //   child: Row(

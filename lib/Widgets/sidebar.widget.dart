@@ -38,7 +38,7 @@ class _SidebarNavbarWidgetState extends State<SidebarNavbarWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(color: AppColors.kAccentColor),
+      decoration: BoxDecoration(color: AppColors.kScaffoldColor),
       child: Padding(
         padding: const EdgeInsetsDirectional.fromSTEB(24, 54, 24, 24),
         child: Column(
@@ -46,15 +46,15 @@ class _SidebarNavbarWidgetState extends State<SidebarNavbarWidget> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(24),
-              child: Image.asset(
-                'Assets/Icons/logo-yellow.png',
-                width: 32,
-                height: 32,
-                fit: BoxFit.contain,
-              ),
-            ),
+            // ClipRRect(
+            //   borderRadius: BorderRadius.circular(24),
+            //   child: Image.asset(
+            //     'Assets/Icons/logo-yellow.png',
+            //     width: 32,
+            //     height: 32,
+            //     fit: BoxFit.contain,
+            //   ),
+            // ),
             Column(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -169,6 +169,29 @@ class _SidebarNavbarWidgetState extends State<SidebarNavbarWidget> {
           ],
         ),
       ),
+    );
+  }
+}
+
+class MenuItemWidget extends StatelessWidget {
+  const MenuItemWidget({super.key, required this.menu});
+  final MenuModel menu;
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        TextWidgets.text300(
+          title: "Accueil",
+          fontSize: 14,
+          textColor: AppColors.kWhiteColor,
+        ),
+        Expanded(child: Container()),
+        Container(
+          width: 2,
+          height: 48,
+          color: AppColors.kWhiteColor,
+        )
+      ],
     );
   }
 }

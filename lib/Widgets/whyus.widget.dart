@@ -120,6 +120,7 @@ class _WhyUsComponentWidgetState extends State<WhyUsComponentWidget> {
                     ),
                     shrinkWrap: true,
                     scrollDirection: Axis.vertical,
+                    physics: const NeverScrollableScrollPhysics(),
                     children: [
                       ...List.generate(data.length, (index) {
                         return SocialImpactItem(data: data[index]);
@@ -141,6 +142,7 @@ class SocialImpactItem extends StatelessWidget {
   final SocialImpactModel data;
   @override
   Widget build(BuildContext context) {
+    // print('${BaseUrl.apiUrl}/images/${data.imagePath}');
     return Stack(
       // mainAxisSize: MainAxisSize.max,
       children: [
