@@ -38,10 +38,11 @@ class _PublicationFormState extends State<PublicationForm> {
   final TextEditingController _titreController = TextEditingController();
   final TextEditingController _auteurController = TextEditingController();
   final TextEditingController _contenuController = TextEditingController();
+  final TextEditingController _videoController = TextEditingController();
 
   String? _imagePath;
   String? _image2Path;
-  String? _videoContent;
+  // String? _videoContent;
 
   // Fonction de soumission du formulaire
   void _submitForm() {
@@ -55,7 +56,7 @@ class _PublicationFormState extends State<PublicationForm> {
         'auteur': _auteurController.text,
         'image': _imagePath,
         'image2': _image2Path,
-        'video': _videoContent,
+        'video': _videoController.text.trim(),
         'contenu': _contenuController.text,
       };
 
@@ -98,32 +99,36 @@ class _PublicationFormState extends State<PublicationForm> {
             const SizedBox(height: 20),
 
             const SizedBox(height: 8),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                ImageUploader(
+            LayoutBuilder(builder: (context, constraints) {
+              return Wrap(
+                spacing: 16,
+                runSpacing: 16,
+                children: [
+                  ImageUploader(
+                      callback: (img) {
+                        _imagePath = base64Encode(img);
+                        setState(() {});
+                      },
+                      title: "Image 1"),
+                  ImageUploader(
                     callback: (img) {
-                      _imagePath = base64Encode(img);
+                      _image2Path = base64Encode(img);
                       setState(() {});
                     },
-                    title: "Image 1"),
-                ImageUploader(
-                  callback: (img) {
-                    _image2Path = base64Encode(img);
-                    setState(() {});
-                  },
-                  title: 'Image 2',
-                ),
-                ImageUploader(
-                  isImage: false,
-                  callback: (img) {
-                    _videoContent = base64Encode(img);
-                    setState(() {});
-                  },
-                  title: 'Video',
-                ),
-              ],
-            ),
+                    title: 'Image 2',
+                  ),
+                  SizedBox(
+                      width: constraints.maxWidth / 3.5,
+                      child: TextFormFieldWidget(
+                        maxLines: 3,
+                        hintText: "Video name",
+                        textColor: AppColors.kWhiteColor,
+                        backColor: AppColors.kTextFormWhiteColor,
+                        editCtrller: _videoController,
+                      )),
+                ],
+              );
+            }),
             const SizedBox(height: 20),
 
             TextFormFieldWidget(
@@ -180,16 +185,16 @@ class _ImageUploaderState extends State<ImageUploader> {
     if (result != null) {
       final double sizeInMb = result.files.first.size / (1024 * 1024);
 
-      if (sizeInMb > imageSize && widget.isImage == true) {
+      if (sizeInMb > (imageSize * 2) && widget.isImage == true) {
         ToastNotification.showToast(
-            msg: "Le fichier est trop volumineux, 1mb maximum",
+            msg: "Le fichier est trop volumineux, 2mb maximum",
             msgType: MessageType.error,
             title: 'Error');
         return;
       }
-      if (sizeInMb > (imageSize * 10) && widget.isImage == false) {
+      if (sizeInMb > (imageSize * 80) && widget.isImage == false) {
         ToastNotification.showToast(
-            msg: "Le fichier est trop volumineux, 10mb maximum",
+            msg: "Le fichier est trop volumineux, 80mb maximum",
             msgType: MessageType.error,
             title: 'Error');
         return;

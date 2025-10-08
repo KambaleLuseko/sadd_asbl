@@ -39,7 +39,7 @@ dependencies:
   provider: 
   # fl_chart:
   shared_preferences:
-  url_launcher:
+  # url_launcher:
   font_awesome_flutter: "10.7.0"
   # easy_localization:
   pdf:

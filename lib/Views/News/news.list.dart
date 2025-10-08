@@ -265,13 +265,13 @@ class _NewsDetailsPageState extends State<NewsDetailsPage> {
             padding: const EdgeInsets.all(16),
             child: TextWidgets.textBold(
               align: TextAlign.center,
-              maxLines: 5,
+              maxLines: 10,
               title: widget.data.contenu
                       ?.toString()
                       .replaceAll('-', ' ')
                       .toUpperCase() ??
                   '',
-              fontSize: 32,
+              fontSize: Responsive.isWeb(context) == false ? 18 : 32,
               textColor: AppColors.kWhiteColor,
             ),
           ),
@@ -310,10 +310,11 @@ class _NewsDetailsPageState extends State<NewsDetailsPage> {
           if (videoUrl != null && _playerCtrller != null)
             ClipRRect(
               borderRadius: BorderRadius.circular(8),
-              child: SizedBox(
-                width: double.maxFinite,
-                height: 300,
-                child: Center(
+              child: AspectRatio(
+                aspectRatio: 16 / 9,
+                child: SizedBox(
+                  // width: double.maxFinite,
+                  // height: 300,
                   child: VideoPlayer(
                     _playerCtrller!,
                   ),
@@ -397,6 +398,10 @@ class _NewsDetailsPageState extends State<NewsDetailsPage> {
                     GestureDetector(
                       onTap: () {
                         _playerCtrller = VideoPlayerController.networkUrl(
+                            videoPlayerOptions: VideoPlayerOptions(
+                                webOptions: const VideoPlayerWebOptions(
+                                    controls: VideoPlayerWebOptionsControls
+                                        .enabled())),
                             Uri.parse(
                                 '${BaseUrl.apiUrl}/images/${widget.data.video!}'))
                           ..initialize().then((value) => setState(() {

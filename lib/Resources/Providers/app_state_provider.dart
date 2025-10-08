@@ -67,12 +67,16 @@ class AppStateProvider extends ChangeNotifier {
       changeAppState();
       Response response = await http
           .post(Uri.parse(url), body: jsonEncode(body), headers: headers)
-          .timeout(Duration(seconds: timeOut));
+          .timeout(const Duration(seconds: 600));
+      if (response.statusCode == 500) {
+        print(response.body);
+      }
       // print("post${response.body}post");
       changeAppState();
       // print('changing state');
       return response;
     } on TimeoutException {
+      print('timeout');
       isApiReachable = false;
       changeAppState();
       return Response(
@@ -91,6 +95,7 @@ class AppStateProvider extends ChangeNotifier {
           }),
           500);
     } catch (error) {
+      print('error');
       print(error.toString());
       isApiReachable = false;
       changeAppState();

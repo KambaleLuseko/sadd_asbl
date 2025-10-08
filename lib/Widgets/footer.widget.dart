@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:url_launcher/url_launcher.dart';
+
+// import 'package:url_launcher/url_launcher.dart';
 
 import '../Resources/Components/texts.dart';
 import '../Resources/Constants/global_variables.dart';
@@ -161,7 +162,7 @@ class _FooterComponentWidgetState extends State<FooterComponentWidget> {
               ),
               GestureDetector(
                 onTap: () {
-                  launchUrl(Uri.parse("https://applicatoryx.org"));
+                  // launchUrl(Uri.parse("https://applicatoryx.org"));
                 },
                 child: TextWidgets.textNormal(
                     title: "Applicatoryx Technologies",

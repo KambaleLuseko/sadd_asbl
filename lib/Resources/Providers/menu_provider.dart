@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sadd_asbl/Views/About/about.page.dart';
 import 'package:sadd_asbl/Views/Galery/goals.dart';
+import 'package:sadd_asbl/Views/Home/widgets/members.widget.dart';
 import 'package:sadd_asbl/Views/News/news.page.dart';
 
 import '../../Views/Home/home.page.dart';
@@ -27,6 +28,12 @@ class MenuProvider extends ChangeNotifier {
         page: const GoalsPage(),
         icon: Icons.golf_course_sharp,
         languagesTitle: {'fr': 'Nos objectifs', 'en': "Goals"},
+      ),
+      MenuModel(
+        title: "Membres",
+        page: const MembersWidget(),
+        icon: Icons.person,
+        languagesTitle: {'fr': 'Membres', 'en': "Members"},
       ),
       MenuModel(
           title: "Réalisations",

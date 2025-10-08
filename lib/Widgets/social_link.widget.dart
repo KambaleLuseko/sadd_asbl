@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
+
+// import 'package:url_launcher/url_launcher.dart';
 
 import '../../Resources/Components/texts.dart';
 
@@ -26,9 +27,9 @@ class SocialLinkWidget extends StatelessWidget {
       cursor: SystemMouseCursors.click,
       child: GestureDetector(
         onTap: () async {
-          if (await canLaunchUrl(Uri.parse(link))) {
-            await launchUrl(Uri.parse(link));
-          }
+          // if (await canLaunchUrl(Uri.parse(link))) {
+          //   await launchUrl(Uri.parse(link));
+          // }
         },
         child: Container(
           margin: const EdgeInsets.only(right: 8),
