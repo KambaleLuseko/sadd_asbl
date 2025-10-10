@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:sadd_asbl/Resources/Components/button.dart';
-import 'package:sadd_asbl/Resources/Constants/navigators.dart';
-import 'package:sadd_asbl/Views/Admin/login.page.dart';
 
+import '../Resources/Components/button.dart';
 import '../Resources/Components/texts.dart';
 import '../Resources/Constants/global_variables.dart';
+import '../Resources/Constants/navigators.dart';
 import '../Resources/Constants/responsive.dart';
 import '../Resources/Providers/menu_provider.dart';
+import '../Views/Admin/login.page.dart';
 import '../main.dart';
 import 'social_link.widget.dart';
 

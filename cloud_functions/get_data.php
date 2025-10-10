@@ -48,8 +48,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 if ($transaction == 'news') {
     $sql = "SELECT realisations.*, (SELECT count FROM news_views WHERE news_id=realisations.id) viewCount FROM realisations ORDER BY id DESC;";
     // print($sql);
-}else if ($transaction == 'client') {
-    $sql = "SELECT plaques.id ID, plaques.numero numPlaque, plaques.ville villePlaque,engin.marque marqueEngin, engin.couleur couleurEngin, engin.shasi, engin.genre, engin.num_moteur, engin.annee_fabrication, engin.annee_circulation,engin.puissance, engin.usage_moto, engin.status, engin.created_at, conducteurs.nom condNom, conducteurs.tel condTel, conducteurs.active, conducteurs.nnCarte cardID, conducteurs.nom2 cond2Nom, conducteurs.tel2 cond2Tel, conducteurs.nnCarte2 cardID2 FROM plaques INNER JOIN engin ON engin.plaque=plaques.numero INNER JOIN conducteurs ON conducteurs.id_engin=engin.id";
+}else if ($transaction == 'videos') {
+    $sql = "SELECT * FROM videos ORDER BY id DESC LIMIT 1;";
     // print($sql);
 }
 else if ($transaction == 'login') {

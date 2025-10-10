@@ -2,12 +2,12 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sadd_asbl/Views/Admin/controller/admin.provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'Resources/Providers/app_state_provider.dart';
 import 'Resources/Providers/menu_provider.dart';
 import 'Resources/Providers/users_provider.dart';
+import 'Views/Admin/controller/admin.provider.dart';
 import 'Views/News/controller/news.provider.dart';
 import 'Views/main.page.dart';
 

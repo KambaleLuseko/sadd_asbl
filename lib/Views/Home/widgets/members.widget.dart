@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:sadd_asbl/Resources/Components/texts.dart';
-import 'package:sadd_asbl/Resources/Constants/global_variables.dart';
-import 'package:sadd_asbl/Resources/Constants/responsive.dart';
-import 'package:sadd_asbl/Widgets/footer.widget.dart';
+
+import '../../../Resources/Components/texts.dart';
+import '../../../Resources/Constants/global_variables.dart';
+import '../../../Resources/Constants/responsive.dart';
+import '../../../Widgets/footer.widget.dart';
 
 class MembersWidget extends StatelessWidget {
   const MembersWidget({super.key});

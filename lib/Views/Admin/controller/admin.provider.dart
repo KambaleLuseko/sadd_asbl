@@ -1,11 +1,12 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:sadd_asbl/Resources/Constants/app_providers.dart';
-import 'package:sadd_asbl/Resources/Constants/enums.dart';
-import 'package:sadd_asbl/Resources/Constants/global_variables.dart';
-import 'package:sadd_asbl/Resources/Constants/navigators.dart';
-import 'package:sadd_asbl/Views/Admin/admin.page.dart';
+
+import '../../../Resources/Constants/app_providers.dart';
+import '../../../Resources/Constants/enums.dart';
+import '../../../Resources/Constants/global_variables.dart';
+import '../../../Resources/Constants/navigators.dart';
+import '../admin.page.dart';
 
 class AdminProvider extends ChangeNotifier {
   UserSession? user;

@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sadd_asbl/Resources/Components/button.dart';
-import 'package:sadd_asbl/Resources/Components/decorated_container.dart';
-import 'package:sadd_asbl/Resources/Components/texts.dart';
-import 'package:sadd_asbl/Resources/Constants/global_variables.dart';
-import 'package:sadd_asbl/Resources/Constants/navigators.dart';
-import 'package:sadd_asbl/Resources/Models/Menu/menu.model.dart';
-import 'package:sadd_asbl/Views/Admin/controller/admin.provider.dart';
-import 'package:sadd_asbl/Views/News/add_news.page.dart';
-import 'package:sadd_asbl/Views/main.page.dart';
+import 'package:sadd_asbl/Views/Admin/video.widget.dart';
+
+import '../../Resources/Components/button.dart';
+import '../../Resources/Components/decorated_container.dart';
+import '../../Resources/Components/texts.dart';
+import '../../Resources/Constants/global_variables.dart';
+import '../../Resources/Constants/navigators.dart';
+import '../../Resources/Models/Menu/menu.model.dart';
+import '../News/add_news.page.dart';
+import '../main.page.dart';
+import 'controller/admin.provider.dart';
 
 class AdminPage extends StatefulWidget {
   const AdminPage({super.key});
@@ -18,9 +20,15 @@ class AdminPage extends StatefulWidget {
 }
 
 class _AdminPageState extends State<AdminPage> {
+  Widget activePage = Container();
+  @override
+  void initState() {
+    super.initState();
+    activePage = menus[0].page;
+  }
+
   @override
   Widget build(BuildContext context) {
-    Widget activePage = menus[0].page;
     return Scaffold(
       backgroundColor: AppColors.kScaffoldColor,
       body: SafeArea(
@@ -92,6 +100,6 @@ class _AdminPageState extends State<AdminPage> {
 
   List<MenuModel> menus = [
     MenuModel(title: "Realisations", page: const PublicationForm()),
-    MenuModel(title: "Videos", page: const PublicationForm()),
+    MenuModel(title: "Videos", page: const VideoImportWidget()),
   ];
 }

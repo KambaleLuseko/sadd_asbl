@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sadd_asbl/Resources/Components/button.dart';
-import 'package:sadd_asbl/Resources/Constants/navigators.dart';
-import 'package:sadd_asbl/Views/Admin/login.page.dart';
 
+import '../Resources/Components/button.dart';
 import '../Resources/Components/texts.dart';
 import '../Resources/Constants/global_variables.dart';
+import '../Resources/Constants/navigators.dart';
 import '../Resources/Models/Menu/menu.model.dart';
 import '../Resources/Providers/app_state_provider.dart';
 import '../Resources/Providers/menu_provider.dart';
 import '../Resources/Providers/users_provider.dart';
 import '../main.dart';
+import 'Admin/login.page.dart';
 
 class MenuWidget extends StatefulWidget {
   const MenuWidget({super.key});

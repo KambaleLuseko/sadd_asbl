@@ -4,13 +4,13 @@ import 'dart:typed_data';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sadd_asbl/Resources/Constants/enums.dart';
-import 'package:sadd_asbl/Views/Admin/controller/admin.provider.dart';
 
 import '../../Resources/Components/button.dart';
 import '../../Resources/Components/text_fields.dart';
 import '../../Resources/Components/texts.dart';
+import '../../Resources/Constants/enums.dart';
 import '../../Resources/Constants/global_variables.dart';
+import '../Admin/controller/admin.provider.dart';
 import 'controller/news.provider.dart';
 import 'model/news.model.dart';
 

@@ -154,6 +154,63 @@ class NewsProvider extends ChangeNotifier {
     }
   }
 
+  saveVideo({
+    required Map data,
+    EnumActions? action = EnumActions.SAVE,
+    required Function callback,
+  }) async {
+    if (data['titre']!.isEmpty) {
+      ToastNotification.showToast(
+        msg: "Veuillez specifier le titre",
+        msgType: MessageType.error,
+        title: "Erreur",
+      );
+      return;
+    }
+    Response res;
+    if (action == EnumActions.UPDATE) {
+      res = await AppProviders.appProvider.httpPut(
+        url: "${BaseUrl.saveData}/${data['id']}",
+        body: {...data, 'transaction': "videos"},
+      );
+    } else {
+      res = await AppProviders.appProvider.httpPost(
+        url: BaseUrl.saveData,
+        body: {...data, 'transaction': "videos"},
+      );
+    }
+    if (res.statusCode == 200 || res.statusCode == 201) {
+      // savedData.syncStatus = 1;
+      // LocalDataHelper.saveData(key: keyName, value: savedData.toJSON());
+      ToastNotification.showToast(
+        msg:
+            jsonDecode(res.body)['message'] ?? "Utilisateur ajouté avec succès",
+        msgType: MessageType.success,
+        title: "Success",
+      );
+      notifyListeners();
+      callback();
+    }
+    if (res.statusCode == 500) {
+      // LocalDataHelper.saveData(key: keyName, value: data.toJSON());
+      ToastNotification.showToast(
+        msg: jsonDecode(res.body)['message'] ??
+            'Une erreur est survenue, sauvegarde hors connexion en cours...',
+        msgType: MessageType.error,
+        title: "Error",
+      );
+    }
+    if (res.statusCode > 299 && res.statusCode != 500) {
+      ToastNotification.showToast(
+        msg: jsonDecode(res.body)['message'] ??
+            'Une erreur est survenue, Veuillez réessayer',
+        msgType: MessageType.error,
+        title: "Erreur",
+      );
+      return;
+    }
+  }
+
   saveViews({required int newsID}) async {
     Response res = await AppProviders.appProvider.httpPost(
       url: BaseUrl.saveData,
@@ -171,5 +228,21 @@ class NewsProvider extends ChangeNotifier {
     } else {
       print('error occured ${jsonDecode(res.body)['message']}');
     }
+  }
+
+  Map? video;
+  getVideo({bool? isRefresh = false}) async {
+    if (isRefresh == false && video != null) return;
+    String url = BaseUrl.getData;
+    var response = await AppProviders.appProvider
+        .httpPost(url: url, body: {"transaction": "videos"});
+    // print(response.body);
+    List data = [];
+    if (response.statusCode == 200) {
+      data =
+          jsonDecode(response.body) is String ? [] : jsonDecode(response.body);
+    }
+    video = data.firstOrNull;
+    notifyListeners();
   }
 }

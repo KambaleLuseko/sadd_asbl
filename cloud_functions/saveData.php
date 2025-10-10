@@ -132,6 +132,31 @@ if ($transaction == 'news') {
         exit();
     }
     // print($sql);
+}else if ($transaction == 'videos') {
+    try {
+        $textes = Constants::connect()->real_escape_string($data['titre'] ?? '');
+        $auteur = Constants::connect()->real_escape_string($data['auteur'] ?? '');
+        $description = Constants::connect()->real_escape_string($data['description'] ?? '');
+        $contenu1 = Constants::connect()->real_escape_string($data['contenu1'] ?? '');
+        $contenu2 = Constants::connect()->real_escape_string($data['contenu2'] ?? '');
+
+    if(!isset($textes) || !isset($auteur) || !isset($contenu1) ){
+        http_response_code(403);
+        echo json_encode(['status' => 'erreur', 'message' => 'Des champs obligatoires sont manquants.']);
+        Constants::connect()->close();
+        exit();
+    }
+        
+    
+        $sql = "INSERT INTO videos (titre, auteur,description, contenu1, contenu2, date_pub) 
+                VALUES ('$textes', '$auteur', '$description', '$contenu1', '$contenu2', '".date('Y-m-d H:i:s')."');";
+    } catch (\Throwable $th) {
+        http_response_code(500);
+        echo json_encode(['status' => 'erreur', 'message' => $th->getMessage()]);
+        Constants::connect()->close();
+        exit();
+    }
+    // print($sql);
 }else if ($transaction == 'client') {
     $sql = "SELECT plaques.id ID, plaques.numero numPlaque, plaques.ville villePlaque,engin.marque marqueEngin, engin.couleur couleurEngin, engin.shasi, engin.genre, engin.num_moteur, engin.annee_fabrication, engin.annee_circulation,engin.puissance, engin.usage_moto, engin.status, engin.created_at, conducteurs.nom condNom, conducteurs.tel condTel, conducteurs.active, conducteurs.nnCarte cardID, conducteurs.nom2 cond2Nom, conducteurs.tel2 cond2Tel, conducteurs.nnCarte2 cardID2 FROM plaques INNER JOIN engin ON engin.plaque=plaques.numero INNER JOIN conducteurs ON conducteurs.id_engin=engin.id";
     // print($sql);

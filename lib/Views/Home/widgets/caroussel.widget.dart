@@ -3,10 +3,9 @@ import 'dart:async';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sadd_asbl/Resources/Components/dialogs.dart';
-import 'package:sadd_asbl/Views/News/news.list.dart';
 
 import '../../../Resources/Components/button.dart';
+import '../../../Resources/Components/dialogs.dart';
 import '../../../Resources/Components/texts.dart';
 import '../../../Resources/Constants/global_variables.dart';
 import '../../../Resources/Constants/responsive.dart';
@@ -14,6 +13,7 @@ import '../../../Resources/Helpers/date_parser.dart';
 import '../../Galery/goals.dart';
 import '../../News/controller/news.provider.dart';
 import '../../News/model/news.model.dart';
+import '../../News/news.list.dart';
 
 class CarousselWidget extends StatefulWidget {
   const CarousselWidget({super.key});

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sadd_asbl/Views/menu.widget.dart';
 
 import '../Resources/Constants/global_variables.dart';
 import '../Resources/Constants/responsive.dart';
@@ -8,6 +7,7 @@ import '../Resources/Providers/menu_provider.dart';
 import '../Widgets/navbar.widget.dart';
 import 'Home/widgets/caroussel.widget.dart';
 import 'News/controller/news.provider.dart';
+import 'menu.widget.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -23,6 +23,7 @@ class _MainPageState extends State<MainPage> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       await context.read<MenuProvider>().initDefaultMenu();
       context.read<NewsProvider>().get();
+      context.read<NewsProvider>().getVideo();
       setState(() {});
     });
   }

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:sadd_asbl/Views/About/about.page.dart';
-import 'package:sadd_asbl/Views/Galery/goals.dart';
-import 'package:sadd_asbl/Views/Home/widgets/members.widget.dart';
-import 'package:sadd_asbl/Views/News/news.page.dart';
 
+import '../../Views/About/about.page.dart';
+import '../../Views/Galery/goals.dart';
 import '../../Views/Home/home.page.dart';
+import '../../Views/Home/widgets/members.widget.dart';
+import '../../Views/News/news.page.dart';
 import '../Models/Menu/menu.model.dart';
 
 class MenuProvider extends ChangeNotifier {
