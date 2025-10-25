@@ -56,31 +56,35 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                       allowBackgroundPlayback: false,
                       webOptions: const VideoPlayerWebOptions(
                           controls: VideoPlayerWebOptionsControls.enabled())),
-                )..initialize().then((value) => setState(() {
-                      _playerCtrller!.setVolume(0);
+                )..initialize().then((value) => setState(() async {
+                      await _playerCtrller!.setVolume(0.2);
+                      await _playerCtrller!.setLooping(true);
                       // videoUrl = widget.data.video!;
-                      _playerCtrller!.play();
+                      await _playerCtrller!.play();
 
                       // activeImage = '';
                     }));
               }
 
               if (data?['contenu2'] == null || _playerCtrller == null) {
+                print(data);
                 return Container();
               }
-              return ClipRRect(
-                borderRadius: BorderRadius.circular(8),
-                child: AspectRatio(
-                  aspectRatio: 16 / 9,
-                  child: SizedBox(
-                    // width: double.maxFinite,
-                    // height: 300,
-                    child: VideoPlayer(
-                      _playerCtrller!,
-                    ),
-                  ),
-                ),
-              );
+              return data?['contenu2'] == null || _playerCtrller == null
+                  ? Container()
+                  : ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: AspectRatio(
+                        aspectRatio: 16 / 9,
+                        child: SizedBox(
+                          // width: double.maxFinite,
+                          // height: 300,
+                          child: VideoPlayer(
+                            _playerCtrller!,
+                          ),
+                        ),
+                      ),
+                    );
             }),
         const SizedBox(
           height: 24,

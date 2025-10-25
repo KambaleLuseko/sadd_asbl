@@ -39,6 +39,7 @@ class BaseUrl {
   static String appName = "SADD Asbl";
   static String appContact = "+243 000 000 000";
   // static String ip = "http://127.0.0.1:8000";
+  // static String ip = "https://test.saddasbl.org/API";
   static String ip = "https://api.saddasbl.org/API";
   static String apiUrl = ip;
   static String authentication = '$apiUrl/authentication';
