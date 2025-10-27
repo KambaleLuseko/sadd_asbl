@@ -11,7 +11,9 @@ import 'Views/Admin/controller/admin.provider.dart';
 import 'Views/News/controller/news.provider.dart';
 import 'Views/main.page.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  prefs = await SharedPreferences.getInstance();
   runApp(
     MultiProvider(
       providers: [

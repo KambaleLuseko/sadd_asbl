@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sadd_asbl/Resources/Components/texts.dart';
+import 'package:sadd_asbl/Resources/Providers/app_state_provider.dart';
 
 import '../Resources/Constants/global_variables.dart';
 import '../Resources/Constants/responsive.dart';
@@ -24,6 +26,7 @@ class _MainPageState extends State<MainPage> {
       await context.read<MenuProvider>().initDefaultMenu();
       context.read<NewsProvider>().get();
       context.read<NewsProvider>().getVideo();
+      await context.read<AppStateProvider>().getStats();
       setState(() {});
     });
   }
@@ -95,6 +98,34 @@ class _MainPageState extends State<MainPage> {
                 },
               ),
             ),
+            Positioned(
+                bottom: 0,
+                right: 0,
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  decoration: BoxDecoration(
+                      color: AppColors.kWhiteColor,
+                      borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(16),
+                          topRight: Radius.circular(16),
+                          bottomLeft: Radius.circular(16))),
+                  child: Row(
+                    children: [
+                      TextWidgets.textBold(
+                          title: context
+                              .select<AppStateProvider, Map>(
+                                  (value) => value.stats)['visits']
+                              .toString(),
+                          fontSize: 12,
+                          textColor: AppColors.kBlackColor),
+                      TextWidgets.textNormal(
+                          title: " visites",
+                          fontSize: 12,
+                          textColor: AppColors.kBlackColor),
+                    ],
+                  ),
+                ))
           ],
         ),
       ),

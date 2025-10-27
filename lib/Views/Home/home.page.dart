@@ -56,18 +56,23 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                       allowBackgroundPlayback: false,
                       webOptions: const VideoPlayerWebOptions(
                           controls: VideoPlayerWebOptionsControls.enabled())),
-                )..initialize().then((value) => setState(() async {
+                )..initialize().then((value) {
+                    WidgetsBinding.instance
+                        .addPostFrameCallback((timeStamp) async {
                       await _playerCtrller!.setVolume(0.2);
                       await _playerCtrller!.setLooping(true);
                       // videoUrl = widget.data.video!;
                       await _playerCtrller!.play();
 
-                      // activeImage = '';
-                    }));
+                      setState(() {
+                        // activeImage = '';
+                      });
+                    });
+                  });
               }
 
               if (data?['contenu2'] == null || _playerCtrller == null) {
-                print(data);
+                // print(data);
                 return Container();
               }
               return data?['contenu2'] == null || _playerCtrller == null

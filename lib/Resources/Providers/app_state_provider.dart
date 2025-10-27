@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
+import 'package:sadd_asbl/main.dart';
 
 import '../Constants/global_variables.dart';
 
@@ -57,7 +58,7 @@ class AppStateProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  int timeOut = 30;
+  int timeOut = 60;
 
   Future<Response> httpPost({required String url, required Map body}) async {
     // debugPrint(jsonEncode(body));
@@ -194,7 +195,6 @@ class AppStateProvider extends ChangeNotifier {
           )
           .timeout(Duration(seconds: timeOut));
       changeAppState();
-      // print(response.body);
       return response;
     } on TimeoutException {
       isApiReachable = false;
@@ -215,7 +215,7 @@ class AppStateProvider extends ChangeNotifier {
           }),
           500);
     } catch (error) {
-      // print(error.toString());
+      print(error.toString());
       isApiReachable = false;
       changeAppState();
       return Response(
@@ -225,119 +225,96 @@ class AppStateProvider extends ChangeNotifier {
     }
   }
 
-  Future<bool> syncData({required String url, required Map body}) async {
-    try {
-      // print('changing state');
-      changeAppState();
-      await http
-          .post(Uri.parse(url), body: jsonEncode(body), headers: headers)
-          .timeout(Duration(seconds: timeOut));
-      changeAppState();
-      // print(response.body);
-      // print('changing state');
-      return true;
-    } on TimeoutException {
-      changeAppState();
-      return false;
-    } on SocketException {
-      changeAppState();
-      return false;
-    } catch (error) {
-      changeAppState();
-      return false;
+  Map stats = {
+    "visits": 0,
+  };
+
+  getStats() async {
+    bool shouldUpdate = false;
+    DateTime? lastUpdate =
+        DateTime.tryParse(prefs.getString('last_view') ?? '');
+    if (lastUpdate != null &&
+        lastUpdate.difference(DateTime.now()).inHours >= 24) {
+      shouldUpdate = true;
+      prefs.setString('last_view', DateTime.now().toString());
+    } else if (lastUpdate == null) {
+      prefs.setString('last_view', DateTime.now().toString());
     }
+    // print(lastUpdate);
+    String url =
+        "${BaseUrl.stats}${shouldUpdate == true ? '?update=true' : ''}";
+    await httpGet(url: url).then((response) {
+      if (response.statusCode == 200) {
+        // print(response.body);
+        stats["visits"] = (jsonDecode(response.body)['visits']);
+        notifyListeners();
+      }
+    }).catchError((err) {
+      print(err.toString());
+    });
   }
 
-  Map stats = {
-    "countStore": 0,
-    "countCategories": 0,
-    "countUsers": 0,
-    "countProducts": 0
-  };
-  // getStats() async {
-  //   await httpGet(
-  //           url:
-  //               "${BaseUrl.stats}all/${navKey.currentContext?.read<UserProvider>().enterpriseData?.uuid}")
+  // getWeeklyTransactions() async {
+  //   await httpGet(url: "")
+  //       // "${BaseUrl.stats}week/$startDate/enterprise/${navKey.currentContext?.read<UserProvider>().enterpriseData?.uuid}")
   //       .then((response) {
   //     if (response.statusCode == 200) {
   //       // print(response.body);
-  //       stats = (jsonDecode(response.body)['data']);
+  //       List data = jsonDecode(response.body)['data'];
+  //       dates = getDaysInBetween(DateTime.parse(startDate), DateTime.now())
+  //           .map((e) => {"date": e, 'amountSell': 0, 'amountBuy': 0})
+  //           .toList();
+  //       for (int iData = 0; iData < data.length; iData++) {
+  //         String pattern = ' ';
+  //         if (data[iData]['description'].toString().toLowerCase() == 'vente') {
+  //           sumSell += double.parse(data[iData]['unitPrice'].toString()) *
+  //               double.parse(data[iData]['quantity'].toString());
+  //         }
+  //         if (data[iData]['description'].toString().toLowerCase() ==
+  //                 'approvisionnement' ||
+  //             data[iData]['description'].toString().toLowerCase() ==
+  //                 'expense') {
+  //           sumBuy += double.parse(data[iData]['unitPrice'].toString()) *
+  //               double.parse(data[iData]['quantity'].toString());
+  //         }
+
+  //         for (int kDates = 0; kDates < dates.length; kDates++) {
+  //           if (data[iData]['description'].toString().toLowerCase() ==
+  //               'vente') {
+  //             if (dates[kDates]['date'].toString().split(' ')[0].trim() ==
+  //                 DateTime.parse(data[iData]['createdAt'])
+  //                     .toString()
+  //                     .split(pattern)[0]
+  //                     .trim()) {
+  //               dates[kDates]['amountSell'] =
+  //                   double.parse(dates[kDates]['amountSell'].toString()) +
+  //                       (double.parse(data[iData]['unitPrice'].toString()) *
+  //                           double.parse(data[iData]['quantity'].toString()));
+  //             }
+  //           }
+  //           if (data[iData]['description'].toString().toLowerCase() ==
+  //                   'approvisionnement' ||
+  //               data[iData]['description'].toString().toLowerCase() ==
+  //                   'expense') {
+  //             if (dates[kDates]['date'].toString().split(' ')[0].trim() ==
+  //                 DateTime.parse(data[iData]['createdAt'])
+  //                     .toString()
+  //                     .split(pattern)[0]
+  //                     .trim()) {
+  //               dates[kDates]['amountBuy'] =
+  //                   double.parse(dates[kDates]['amountBuy'].toString()) +
+  //                       (double.parse(data[iData]['unitPrice'].toString()) *
+  //                           double.parse(data[iData]['quantity'].toString()));
+  //             }
+  //           }
+  //         }
+  //       }
   //       notifyListeners();
   //     }
   //   }).catchError((err) {
   //     // print(err.toString());
   //   });
   // }
-
-  // List<ProvisionModel> weeklyData = [];
-  List<Map> weeks = [];
-  double sumSell = 0, sumBuy = 0;
-  static String startDate =
-      DateTime.now().subtract(const Duration(days: 7)).toString().split(' ')[0];
-  List dates = getDaysInBetween(DateTime.parse(startDate), DateTime.now())
-      .map((e) => {"date": e, 'amountSell': 0, 'amountBuy': 0})
-      .toList();
-  getWeeklyTransactions() async {
-    await httpGet(url: "")
-        // "${BaseUrl.stats}week/$startDate/enterprise/${navKey.currentContext?.read<UserProvider>().enterpriseData?.uuid}")
-        .then((response) {
-      if (response.statusCode == 200) {
-        // print(response.body);
-        List data = jsonDecode(response.body)['data'];
-        dates = getDaysInBetween(DateTime.parse(startDate), DateTime.now())
-            .map((e) => {"date": e, 'amountSell': 0, 'amountBuy': 0})
-            .toList();
-        for (int iData = 0; iData < data.length; iData++) {
-          String pattern = ' ';
-          if (data[iData]['description'].toString().toLowerCase() == 'vente') {
-            sumSell += double.parse(data[iData]['unitPrice'].toString()) *
-                double.parse(data[iData]['quantity'].toString());
-          }
-          if (data[iData]['description'].toString().toLowerCase() ==
-                  'approvisionnement' ||
-              data[iData]['description'].toString().toLowerCase() ==
-                  'expense') {
-            sumBuy += double.parse(data[iData]['unitPrice'].toString()) *
-                double.parse(data[iData]['quantity'].toString());
-          }
-
-          for (int kDates = 0; kDates < dates.length; kDates++) {
-            if (data[iData]['description'].toString().toLowerCase() ==
-                'vente') {
-              if (dates[kDates]['date'].toString().split(' ')[0].trim() ==
-                  DateTime.parse(data[iData]['createdAt'])
-                      .toString()
-                      .split(pattern)[0]
-                      .trim()) {
-                dates[kDates]['amountSell'] =
-                    double.parse(dates[kDates]['amountSell'].toString()) +
-                        (double.parse(data[iData]['unitPrice'].toString()) *
-                            double.parse(data[iData]['quantity'].toString()));
-              }
-            }
-            if (data[iData]['description'].toString().toLowerCase() ==
-                    'approvisionnement' ||
-                data[iData]['description'].toString().toLowerCase() ==
-                    'expense') {
-              if (dates[kDates]['date'].toString().split(' ')[0].trim() ==
-                  DateTime.parse(data[iData]['createdAt'])
-                      .toString()
-                      .split(pattern)[0]
-                      .trim()) {
-                dates[kDates]['amountBuy'] =
-                    double.parse(dates[kDates]['amountBuy'].toString()) +
-                        (double.parse(data[iData]['unitPrice'].toString()) *
-                            double.parse(data[iData]['quantity'].toString()));
-              }
-            }
-          }
-        }
-        notifyListeners();
-      }
-    }).catchError((err) {
-      // print(err.toString());
-    });
-  }
 
   static List<DateTime> getDaysInBetween(DateTime startDate, DateTime endDate) {
     List<DateTime> days = [];
