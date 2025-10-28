@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:seo/html/seo_widget.dart';
 
 import '../Resources/Components/button.dart';
 import '../Resources/Components/texts.dart';
@@ -64,7 +65,7 @@ class _NavbarWidgetState extends State<NavbarWidget> {
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      if (Responsive.isMobile(context))
+                      if (!Responsive.isWeb(context))
                         IconButton(
                           icon: Icon(
                             Icons.menu_rounded,
@@ -87,15 +88,17 @@ class _NavbarWidgetState extends State<NavbarWidget> {
                       const SizedBox(
                         width: 16,
                       ),
-                      TextWidgets.textBold(
-                        title: appName,
-                        fontSize: 32,
-                        textColor: AppColors.kWhiteColor,
-                      ),
+                      Seo.text(
+                          text: appName,
+                          child: TextWidgets.textBold(
+                            title: appName,
+                            fontSize: 32,
+                            textColor: AppColors.kWhiteColor,
+                          )),
                     ],
                   ),
                 ),
-                if (Responsive.isMobile(context) == false)
+                if (Responsive.isWeb(context) == true)
                   Expanded(
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
@@ -134,12 +137,12 @@ class _NavbarWidgetState extends State<NavbarWidget> {
                 const SizedBox(
                   width: 24,
                 ),
-                const Row(
+                Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    SocialLinkWidget(
+                    const SocialLinkWidget(
                       // iconColor: Colors.blue.shade700,
                       icon: FontAwesomeIcons.facebook,
                       // iconColor: Colors.blue,
@@ -147,21 +150,29 @@ class _NavbarWidgetState extends State<NavbarWidget> {
                       title: "Facebook",
                       fontSize: 16,
                     ),
-                    SizedBox(height: 8),
-                    SocialLinkWidget(
-                      icon: FontAwesomeIcons.youtube,
-                      // iconColor: Colors.red,
-                      link: 'https://www.youtube.com/@saddasbl1190',
-                      fontSize: 20,
-                      title: "Youtube",
+                    const SizedBox(height: 8),
+                    Seo.link(
+                      href: 'https://www.youtube.com/@saddasbl1190',
+                      anchor: '@saddasbl1190',
+                      child: const SocialLinkWidget(
+                        icon: FontAwesomeIcons.youtube,
+                        // iconColor: Colors.red,
+                        link: 'https://www.youtube.com/@saddasbl1190',
+                        fontSize: 20,
+                        title: "Youtube",
+                      ),
                     ),
-                    SizedBox(height: 8),
-                    SocialLinkWidget(
-                      // iconColor: Colors.pinkAccent.shade700,
-                      icon: FontAwesomeIcons.instagram,
-                      link: 'https://www.instagram.com/',
-                      fontSize: 20,
-                      title: "Instagram",
+                    const SizedBox(height: 8),
+                    Seo.link(
+                      anchor: '@fondation_sadd/',
+                      href: 'https://www.instagram.com/fondation_sadd/',
+                      child: const SocialLinkWidget(
+                        // iconColor: Colors.pinkAccent.shade700,
+                        icon: FontAwesomeIcons.instagram,
+                        link: 'https://www.instagram.com/fondation_sadd/',
+                        fontSize: 20,
+                        title: "Instagram",
+                      ),
                     ),
                   ],
                 ),

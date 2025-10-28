@@ -8,7 +8,6 @@ import '../Resources/Constants/navigators.dart';
 import '../Resources/Models/Menu/menu.model.dart';
 import '../Resources/Providers/app_state_provider.dart';
 import '../Resources/Providers/menu_provider.dart';
-import '../Resources/Providers/users_provider.dart';
 import '../main.dart';
 import 'Admin/login.page.dart';
 
@@ -47,26 +46,26 @@ class _MenuWidgetState extends State<MenuWidget> {
                     ),
                     child: Row(
                       children: [
-                        Center(
-                          child: Container(
-                            width: 50,
-                            height: 50,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(1000),
-                              border: Border.all(
-                                color: AppColors.kWhiteColor,
-                                width: 2,
-                              ),
-                            ),
-                            child: Icon(
-                              Icons.person,
-                              size: 40,
-                              color: AppColors.kWhiteColor,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 16),
+                        // Center(
+                        //   child: Container(
+                        //     width: 50,
+                        //     height: 50,
+                        //     alignment: Alignment.center,
+                        //     decoration: BoxDecoration(
+                        //       borderRadius: BorderRadius.circular(1000),
+                        //       border: Border.all(
+                        //         color: AppColors.kWhiteColor,
+                        //         width: 2,
+                        //       ),
+                        //     ),
+                        //     child: Icon(
+                        //       Icons.person,
+                        //       size: 40,
+                        //       color: AppColors.kWhiteColor,
+                        //     ),
+                        //   ),
+                        // ),
+                        // const SizedBox(width: 16),
                         Expanded(
                           child: Column(
                             mainAxisSize: MainAxisSize.max,
@@ -75,12 +74,7 @@ class _MenuWidgetState extends State<MenuWidget> {
                             children: [
                               Container(
                                 child: TextWidgets.textBold(
-                                  title: context
-                                          .watch<UserProvider>()
-                                          .userLogged
-                                          ?.user
-                                          .fullname ??
-                                      appName.toUpperCase(),
+                                  title: appName.toUpperCase(),
                                   fontSize: 16,
                                   textColor: AppColors.kWhiteColor,
                                 ),
@@ -88,18 +82,18 @@ class _MenuWidgetState extends State<MenuWidget> {
                               // const SizedBox(
                               //   height: 10,
                               // ),
-                              Container(
-                                child: TextWidgets.text300(
-                                  title: context
-                                          .watch<UserProvider>()
-                                          .userLogged
-                                          ?.user
-                                          .phoneNumber ??
-                                      'info@${appName.toLowerCase().replaceAll(' ', '')}.org',
-                                  fontSize: 12,
-                                  textColor: AppColors.kGreyColor,
-                                ),
-                              ),
+                              // Container(
+                              //   child: TextWidgets.text300(
+                              //     title: context
+                              //             .watch<UserProvider>()
+                              //             .userLogged
+                              //             ?.user
+                              //             .phoneNumber ??
+                              //         'info@${appName.toLowerCase().replaceAll(' ', '')}.org',
+                              //     fontSize: 12,
+                              //     textColor: AppColors.kGreyColor,
+                              //   ),
+                              // ),
                               const SizedBox(height: 8),
                               // Container(
                               //   child: TextWidgets.text300(

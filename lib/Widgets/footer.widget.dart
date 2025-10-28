@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:seo/html/seo_widget.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 // import 'package:url_launcher/url_launcher.dart';
 
@@ -75,31 +77,39 @@ class _FooterComponentWidgetState extends State<FooterComponentWidget> {
                   FooterItemWidget(
                     width: width,
                     title: "Liens utiles",
-                    content: const Column(
+                    content: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SocialLinkWidget(
+                        const SocialLinkWidget(
                           icon: FontAwesomeIcons.facebook,
                           // iconColor: Colors.blue,
                           link: 'https://www.facebook.com/',
                           showTitle: true,
                           title: "Facebook",
                         ),
-                        SizedBox(height: 8),
-                        SocialLinkWidget(
-                          icon: FontAwesomeIcons.youtube,
-                          // iconColor: Colors.red,
-                          link: 'https://www.youtube.com/@saddasbl1190',
-                          showTitle: true,
-                          title: "Youtube",
+                        const SizedBox(height: 8),
+                        Seo.link(
+                          href: 'https://www.youtube.com/@saddasbl1190',
+                          anchor: '@saddasbl1190',
+                          child: const SocialLinkWidget(
+                            icon: FontAwesomeIcons.youtube,
+                            // iconColor: Colors.red,
+                            link: 'https://www.youtube.com/@saddasbl1190',
+                            showTitle: true,
+                            title: "Youtube",
+                          ),
                         ),
-                        SizedBox(height: 8),
-                        SocialLinkWidget(
-                          // iconColor: Colors.blueAccent,
-                          icon: FontAwesomeIcons.instagram,
-                          link: 'https://www.instagram.com/',
-                          showTitle: true,
-                          title: "Instagram",
+                        const SizedBox(height: 8),
+                        Seo.link(
+                          href: 'https://www.instagram.com/fondation_sadd/',
+                          anchor: '@fondation_sadd',
+                          child: const SocialLinkWidget(
+                            // iconColor: Colors.blueAccent,
+                            icon: FontAwesomeIcons.instagram,
+                            link: 'https://www.instagram.com/fondation_sadd/',
+                            showTitle: true,
+                            title: "Instagram",
+                          ),
                         ),
                       ],
                     ),
@@ -160,14 +170,18 @@ class _FooterComponentWidgetState extends State<FooterComponentWidget> {
               const SizedBox(
                 width: 8,
               ),
-              GestureDetector(
-                onTap: () {
-                  // launchUrl(Uri.parse("https://applicatoryx.org"));
-                },
-                child: TextWidgets.textNormal(
-                    title: "Applicatoryx Technologies",
-                    fontSize: 14,
-                    textColor: AppColors.kWhiteColor),
+              Seo.link(
+                href: "https://applicatoryx.org",
+                anchor: 'Applicatoryx Technologies',
+                child: GestureDetector(
+                  onTap: () {
+                    launchUrl(Uri.parse("https://applicatoryx.org"));
+                  },
+                  child: TextWidgets.textNormal(
+                      title: "Applicatoryx Technologies",
+                      fontSize: 14,
+                      textColor: AppColors.kWhiteColor),
+                ),
               ),
             ],
           )

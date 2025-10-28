@@ -195,13 +195,13 @@ List<MemberModel> members = [
   ),
   MemberModel(
     name: "Mme Sarah LUSENGE KAMATHE",
-    role: "Chargé de sensibilisation",
+    role: "Directrice de programme",
     contact: '',
     email: '',
     image: null,
   ),
   MemberModel(
-    name: "Mr KALEGAMIRE Jean Marie",
+    name: "Me KALEGAMIRE Jean Marie",
     role: "Chef de départements droits et chargé de plaidoyer",
     contact: '',
     email: '',

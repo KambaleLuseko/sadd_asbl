@@ -87,7 +87,7 @@ class _MainPageState extends State<MainPage> {
                 ),
               ),
             ),
-            // if (!Responsive.isWeb(context))
+            // if (Responsive.isWeb(context))
             Positioned(
               top: 0,
               right: 0,

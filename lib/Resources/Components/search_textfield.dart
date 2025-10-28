@@ -27,7 +27,7 @@ class SearchTextFormFieldWidget extends StatefulWidget {
   });
 
   @override
-  _SearchTextFormFieldWidgetState createState() =>
+  State<SearchTextFormFieldWidget> createState() =>
       _SearchTextFormFieldWidgetState();
 }
 

@@ -40,7 +40,7 @@ class SearchableTextFormFieldWidget extends StatefulWidget {
   });
 
   @override
-  _SearchableTextFormFieldWidgetState createState() =>
+  State<SearchableTextFormFieldWidget> createState() =>
       _SearchableTextFormFieldWidgetState();
 }
 
@@ -52,9 +52,8 @@ class _SearchableTextFormFieldWidgetState
 
   @override
   void initState() {
-    searchedData = widget.data.length > 20
-        ? widget.data.sublist(0, 20)
-        : widget.data;
+    searchedData =
+        widget.data.length > 20 ? widget.data.sublist(0, 20) : widget.data;
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
@@ -290,9 +289,8 @@ class _SearchableTextFormFieldWidgetToJSONState
 
   @override
   void initState() {
-    searchedData = widget.data.length > 20
-        ? widget.data.sublist(0, 20)
-        : widget.data;
+    searchedData =
+        widget.data.length > 20 ? widget.data.sublist(0, 20) : widget.data;
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
